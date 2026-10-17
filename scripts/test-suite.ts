@@ -402,7 +402,7 @@ async function runTestSuite() {
 
     assert(fixedIssue.status === 'fixed', 'Fast Fix issue successfully marked as "fixed"');
     assert(fixedIssue.durationMinutes === 45, `Duration tracked accurately as ${fixedIssue.durationMinutes} minutes (expected 45)`);
-    assert(fixedIssue.adminNotes?.includes('cipher suite'), 'Admin resolution notes saved and accessible');
+    assert(Boolean(fixedIssue.adminNotes?.includes('cipher suite')), 'Admin resolution notes saved and accessible');
 
     // 11. Project Development Scope Extensions & Automated Merge Flow
     console.log('\n1️⃣1️⃣ Project Scope Extensions & Automated Merge Workflow:');
