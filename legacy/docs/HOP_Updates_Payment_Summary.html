@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOP App - Updates & Payment Summary | moemen team</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Baby Blue Shades */
+            --primary-color: #2C74B3;
+            --secondary-color: #89CFF0;
+            --accent-color: #4DA8DA;
+            --bg-color: #F0F8FF;
+            --text-color: #1A374D;
+            --card-bg: #FFFFFF;
+            --border-color: #B4E4FF;
+            --hover-color: #D4F1F4;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* --- Company Badge (moemen team) --- */
+        .company-badge {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 15px 30px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(77, 168, 218, 0.3);
+            animation: slideDown 0.8s ease-out forwards;
+        }
+
+        .company-badge h2 {
+            font-size: 1.5rem;
+            margin: 0;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .company-badge a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .company-badge a:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* --- Main Header --- */
+        .header {
+            background-color: var(--card-bg);
+            border-top: 5px solid var(--secondary-color);
+            padding: 40px 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            animation: fadeIn 1s ease-out forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 150px;
+            height: 150px;
+            background: var(--secondary-color);
+            opacity: 0.1;
+            border-radius: 50%;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .header h2 {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .header-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            flex-wrap: wrap;
+            background: var(--hover-color);
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: inline-flex;
+        }
+
+        .header-desc {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 600;
+        }
+
+        /* --- Sections and Cards --- */
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            border-left: 5px solid var(--secondary-color);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .section-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-card:hover {
+            box-shadow: 0 8px 25px rgba(137, 207, 240, 0.2);
+            transform: translateY(-2px);
+            border-left-color: var(--primary-color);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            border-bottom: 2px dashed var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        /* --- Lists --- */
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        ul li {
+            position: relative;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            padding-left: 25px;
+        }
+
+        ul li::before {
+            content: "✔";
+            color: var(--primary-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Custom list for links */
+        .links-list li::before {
+            content: "🔗";
+        }
+        
+        .links-list a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            word-break: break-all;
+        }
+        
+        .links-list a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        /* --- Notes --- */
+        .note-box {
+            background-color: #FFF9E6;
+            border-left: 4px solid #FFC107;
+            padding: 20px;
+            margin-top: 25px;
+            border-radius: 8px;
+            font-size: 1.05rem;
+        }
+
+        /* Payment List formatting */
+        .payment-list li {
+            font-weight: 600;
+        }
+        .payment-list li span {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        .payment-total {
+            font-size: 1.3rem;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px dashed var(--border-color);
+            color: var(--primary-color);
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--text-color));
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .footer h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        .footer p {
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+
+        /* --- Print Button --- */
+        .print-btn {
+            display: block;
+            width: 250px;
+            margin: 30px auto;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(44, 116, 179, 0.3);
+        }
+
+        .print-btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(44, 116, 179, 0.4);
+        }
+
+        /* --- Animations --- */
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* --- Mobile --- */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .company-badge { flex-direction: column; gap: 15px; text-align: center; }
+            .section-card { padding: 20px; }
+        }
+
+        /* --- Print --- */
+        @media print {
+            body { background-color: white; padding: 0; }
+            .print-btn, .company-badge a { display: none; }
+            .section-card { box-shadow: none; border: 1px solid #ddd; opacity: 1; transform: none; page-break-inside: avoid;}
+            .company-badge { background: white; color: black; border: 2px solid black; box-shadow: none; }
+            .company-badge * { color: black !important; }
+            .footer { background: white; color: black; border: 2px solid black; }
+            .footer * { color: black !important; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        
+        <!-- Company Badge -->
+        <div class="company-badge">
+            <div>
+                <h2>moemen team</h2>
+            </div>
+            <a href="https://moemen-team.tech" target="_blank">moemen-team.tech</a>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1>HOP App</h1>
+            <h2>Updates & Payment Summary</h2>
+            
+            <div class="header-info">
+                <span>Phase: Final Adjustments & Delivery</span>
+            </div>
+        </header>
+
+        <!-- Section 1: Development Updates -->
+        <div class="section-card animate-scroll">
+            <h2 class="section-title">Development Updates</h2>
+            <ul>
+                <li><strong>Firebase & Google Cloud:</strong> Integration completed.</li>
+                <li><strong>Paymob:</strong> Payment logic implemented.</li>
+                <li><strong>Vehicles:</strong> Add vehicle, status handling, and real-time updates.</li>
+                <li><strong>Authentication:</strong> Authentication flow implemented and improved.</li>
+                <li><strong>Translation:</strong> EasyLocalization with Arabic, English, and Russian JSON files.</li>
+                <li><strong>UI/UX:</strong> General UI and UX optimizations.</li>
+                <li><strong>Financials:</strong> Financial and payment-related logic implemented.</li>
+            </ul>
+        </div>
+
+        <!-- Section 2: Payment Summary -->
+        <div class="section-card animate-scroll">
+            <h2 class="section-title">Payment Summary</h2>
+            <ul class="payment-list">
+                <li>New development cost: <span>7,000 EGP</span></li>
+                <li>Previous month: <span>5,000 EGP</span></li>
+                <li>Amount paid: <span>3,000 EGP</span></li>
+                <li class="payment-total">Total Remaining / Due: <strong>9,000 EGP</strong></li>
+            </ul>
+        </div>
+
+        <!-- Section 3: Project Links -->
+        <div class="section-card animate-scroll">
+            <h2 class="section-title">Project Links & Resources</h2>
+            <ul class="links-list">
+                <li><strong>Old Flutter Repository:</strong> <br> <a href="https://github.com/moemenrady/hoooob-flutter" target="_blank">https://github.com/moemenrady/hoooob-flutter</a></li>
+                <li><strong>Old Backend Repository:</strong> <br> <a href="https://github.com/moemenrady/hoooob-back" target="_blank">https://github.com/moemenrady/hoooob-back</a></li>
+                <li><strong>New APK (Final HOP):</strong> <br> <a href="https://drive.google.com/file/d/1Pwq7xurmTkhgIzs1h9L5Ko7wWP2CDAtu/view?usp=sharing" target="_blank">Download / View on Google Drive</a></li>
+            </ul>
+        </div>
+
+        <button class="print-btn" onclick="printDocument()">Print / Save as PDF</button>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <h2>Implemented by moemen team</h2>
+            <p>Innovative & reliable software solutions</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Scroll Animation
+        document.addEventListener("DOMContentLoaded", function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.animate-scroll').forEach(card => {
+                observer.observe(card);
+            });
+        });
+
+        // Print Function
+        function printDocument() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

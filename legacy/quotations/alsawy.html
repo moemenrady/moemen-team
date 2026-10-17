@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العرض الفني - نظام الإدارة والتحول الرقمي</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e3a8a', // Deep Blue
+                        accent: '#d97706',  // Amber/Gold
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            height: 100%;
+        }
+        
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .dark .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #1e3a8a, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .dark .gradient-text {
+            background: linear-gradient(to right, #60a5fa, #93c5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bg-pattern {
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .dark .bg-pattern {
+            background-image: radial-gradient(#374151 1px, transparent 1px);
+        }
+
+        .badge-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 bg-pattern min-h-screen relative overflow-x-hidden">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 bg-white/70 dark:bg-gray-900/70 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-xl shadow-lg">M</div>
+                    <div class="flex flex-col">
+                        <span class="font-bold text-lg leading-tight">Moemen Team</span>
+                        <span class="text-[10px] text-gray-500 dark:text-gray-400 tracking-wider">Digital Solutions</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" aria-label="Toggle Theme">
+                        <svg id="theme-icon-dark" class="w-6 h-6 hidden dark:block text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                        <svg id="theme-icon-light" class="w-6 h-6 block dark:hidden text-gray-600" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-28 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        
+        <!-- Header Section -->
+        <header class="mb-16 text-center" data-aos="fade-down">
+            <span class="inline-block py-1.5 px-4 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200 text-sm font-bold mb-6 border border-blue-200 dark:border-blue-800/50 shadow-sm">
+                العرض الفني
+            </span>
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold mb-6 gradient-text leading-tight">
+                نظام الإدارة والتحول الرقمي <br/> لشركة نقل الأثاث
+            </h1>
+            
+            <div class="flex flex-col items-center justify-center gap-2 mt-8">
+                <div class="text-lg md:text-xl text-gray-600 dark:text-gray-400 font-semibold">مقدم من: <span class="text-primary dark:text-blue-400 font-bold">Moemen Team</span></div>
+                <div class="text-sm md:text-base text-gray-500 dark:text-gray-500 tracking-widest font-medium uppercase mt-2">
+                    Technology. Automation. Digital Solutions.
+                </div>
+            </div>
+        </header>
+
+        <!-- Grid Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+
+            <!-- 1 -->
+            <div class="glass-card rounded-2xl p-6 md:p-8 lg:col-span-3" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300">1</div>
+                    <h2 class="text-xl md:text-2xl font-bold">مقدمة المشروع</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-base md:text-lg">
+                    يهدف المشروع إلى تطوير نظام إداري رقمي متكامل يساعد شركة نقل الأثاث على الانتقال من الاعتماد على الإجراءات اليدوية وتشتت البيانات إلى منظومة رقمية موحدة لإدارة العمليات اليومية، بيانات العملاء، طلبات نقل الأثاث، التسعير، الدفعات، المستخدمين، والتقارير.<br><br>
+                    تم تصميم فكرة النظام لتكون مناسبة لطبيعة عمل شركات نقل الأثاث، حيث تختلف كل عملية نقل عن الأخرى من حيث العميل، موعد النقل، عدد الوحدات، أنواع الأثاث، تفاصيل كل قطعة، الكميات، الأسعار، والمدفوعات.<br><br>
+                    وبالتالي فإن النظام لا يقتصر على تسجيل الطلبات فقط، وإنما يهدف إلى إنشاء منظومة تشغيل وإدارة متكاملة تبدأ من لحظة تسجيل بيانات العميل وإنشاء طلب النقل، مرورًا بتحديد محتويات الطلب وتسعيرها ومتابعة حالتها ودفعاتها، وصولًا إلى التقارير والتحليلات التي تساعد الإدارة على فهم أداء الشركة واتخاذ القرارات بناءً على بيانات فعلية.
+                </p>
+            </div>
+
+            <!-- 2 -->
+            <div class="glass-card rounded-2xl p-6 md:p-8 lg:col-span-2" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300">2</div>
+                    <h2 class="text-xl md:text-2xl font-bold">الهدف الرئيسي من النظام</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">يهدف النظام إلى تحقيق مجموعة من الأهداف الرئيسية، من أهمها:</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400 leading-relaxed">
+                    <li>رقمنة العمليات اليومية للشركة.</li>
+                    <li>تجميع جميع بيانات العملاء والطلبات في نظام مركزي واحد.</li>
+                    <li>تسهيل إدخال بيانات طلبات نقل الأثاث.</li>
+                    <li>تقليل الوقت والمجهود المطلوب لإنشاء الطلبات.</li>
+                    <li>تقليل الأخطاء الناتجة عن التسجيل اليدوي.</li>
+                    <li>توحيد آلية تسعير عناصر الأثاث.</li>
+                    <li>متابعة حالة كل طلب في الوقت الفعلي.</li>
+                    <li>إدارة الدفعات والمبالغ المتبقية.</li>
+                    <li>توفير قاعدة بيانات منظمة للعملاء.</li>
+                    <li>توفير تقارير إدارية ومالية وتشغيلية دقيقة.</li>
+                    <li>تسهيل الوصول إلى المعلومات والبحث عنها.</li>
+                    <li>توفير صلاحيات مختلفة حسب طبيعة المستخدم.</li>
+                    <li>تمكين الإدارة من متابعة أداء الشركة من خلال Dashboard وتقارير واضحة.</li>
+                    <li>إنشاء قاعدة تقنية قابلة للتوسع مستقبلًا وإضافة وظائف جديدة حسب احتياجات الشركة.</li>
+                </ul>
+            </div>
+
+            <!-- 3 -->
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-teal-100 dark:bg-teal-900 text-teal-600 dark:text-teal-300">3</div>
+                    <h2 class="text-xl md:text-2xl font-bold">فكرة النظام بشكل عام</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    يعتمد النظام على مجموعة من الوحدات المترابطة، بحيث تكون طلبات نقل الأثاث هي الوحدة المحورية في النظام.<br>
+                    وتبدأ دورة العمل بشكل مبسط كالتالي:
+                </p>
+                <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-xl text-sm font-semibold text-center text-primary dark:text-blue-300 leading-loose mb-4">
+                    العميل &larr; إنشاء طلب نقل &larr; تحديد موعد النقل &larr; إضافة وحدات الأثاث &larr; إضافة عناصر الأثاث &larr; احتساب الأسعار &larr; تحديد إجمالي الطلب &larr; تسجيل الدفعات &larr; متابعة حالة الطلب &larr; إتمام الطلب &larr; التقارير والتحليلات
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    كما يتم ربط الطلب ببيانات العميل، بحيث يمكن للإدارة الرجوع إلى تاريخ تعاملات العميل وطلباته السابقة ومدفوعاته وبياناته في أي وقت.
+                </p>
+            </div>
+
+            <!-- 4 -->
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-orange-100 dark:bg-orange-900 text-orange-600 dark:text-orange-300">4</div>
+                    <h2 class="text-xl md:text-2xl font-bold">إدارة العملاء</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    يوفر النظام وحدة متكاملة لإدارة العملاء، بحيث تصبح جميع بيانات العملاء محفوظة ومنظمة داخل قاعدة بيانات مركزية.
+                </p>
+                <h3 class="font-bold text-lg mb-2">بيانات العميل</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-2">يمكن أن تتضمن بيانات العميل على سبيل المثال:</p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 mb-4">
+                    <li>اسم العميل.</li><li>رقم الهاتف.</li><li>رقم هاتف إضافي عند الحاجة.</li><li>العنوان.</li><li>بيانات التواصل.</li><li>ملاحظات خاصة بالعميل.</li><li>تاريخ إضافة العميل.</li><li>الطلبات السابقة المرتبطة بالعميل.</li><li>إجمالي تعاملات العميل.</li><li>حالة التعاملات المالية الخاصة به.</li>
+                </ul>
+                <h3 class="font-bold text-lg mb-2">البحث عن العملاء</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-2">يمكن للموظف الوصول إلى العميل بسهولة من خلال البحث باستخدام البيانات المتاحة مثل: اسم العميل، رقم الهاتف، بيانات أخرى يتم اعتمادها. وفي حالة وجود عميل سابق، يمكن استخدام بياناته مباشرة.</p>
+                <h3 class="font-bold text-lg mb-2">ملف العميل</h3>
+                <p class="text-gray-600 dark:text-gray-400">يكون لكل عميل ملف داخل النظام يعرض المعلومات المتعلقة به وسجل الطلبات السابقة.</p>
+            </div>
+
+            <!-- 5 -->
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-300">5</div>
+                    <h2 class="text-xl md:text-2xl font-bold">إدارة طلبات نقل الأثاث</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    تعتبر طلبات نقل الأثاث المحور الأساسي للنظام. ومن خلالها يتم تسجيل وإدارة العملية بالكامل منذ إنشاء الطلب وحتى إتمامه أو إلغائه.
+                </p>
+                <h3 class="font-bold text-lg mb-2">بيانات طلب النقل</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-2">يحتوي الطلب على مجموعة من البيانات الأساسية، مثل:</p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400">
+                    <li>العميل.</li>
+                    <li>موعد النقل.</li>
+                    <li>حالة الطلب.</li>
+                    <li>تفاصيل الأثاث المطلوب نقله.</li>
+                    <li>إجمالي قيمة الطلب.</li>
+                    <li>الدفعات المسجلة.</li>
+                    <li>المبلغ المتبقي.</li>
+                    <li>ملاحظات الطلب.</li>
+                    <li>البيانات التشغيلية التي يتم اعتمادها ضمن التصميم النهائي.</li>
+                </ul>
+            </div>
+
+            <!-- 6 -->
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300">6</div>
+                    <h2 class="text-xl md:text-2xl font-bold">حالات الطلب</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">يمكن للنظام إدارة حالة كل طلب ومتابعتها، ومن أمثلة الحالات الأساسية:</p>
+                <div class="space-y-4 text-gray-600 dark:text-gray-400">
+                    <div>
+                        <strong class="text-primary dark:text-blue-400 block mb-1">قيد التنفيذ</strong>
+                        الطلب تم إنشاؤه وما زال ضمن العمليات الحالية للشركة.
+                    </div>
+                    <div>
+                        <strong class="text-primary dark:text-blue-400 block mb-1">تم</strong>
+                        تم تنفيذ عملية النقل وإنهاء الطلب.
+                    </div>
+                    <div>
+                        <strong class="text-primary dark:text-blue-400 block mb-1">ملغي</strong>
+                        تم إلغاء الطلب مع إمكانية الاحتفاظ ببياناته وسجل العملية داخل النظام.
+                    </div>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 mt-4">ويمكن مستقبلاً إضافة حالات تشغيلية أخرى إذا تطلبت طبيعة العمل ذلك.</p>
+            </div>
+
+            <!-- 7 & 8 Combined logically in layout but separated by sections -->
+            <!-- 7 -->
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300">7</div>
+                    <h2 class="text-xl md:text-2xl font-bold">نظام تسعير عناصر الأثاث</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    يعتبر نظام التسعير من أهم الأجزاء المحورية في المشروع.<br>
+                    الفكرة الأساسية هي إنشاء قاعدة أسعار مركزية لعناصر الأثاث تتم إدارتها من خلال الإدارة.<br>
+                    ويعمل النظام بطريقة مشابهة لفكرة الـ Menu في الأنظمة التشغيلية، بحيث تكون الإدارة هي المسؤولة عن تحديد العناصر وأسعارها وتحديثها عند الحاجة.
+                </p>
+            </div>
+
+            <!-- 8 -->
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300">8</div>
+                    <h2 class="text-xl md:text-2xl font-bold">إدارة عناصر وأسعار النقل</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-2">يمكن للإدارة إنشاء وإدارة قائمة العناصر التي يتم التعامل معها داخل طلبات النقل. على سبيل المثال:</p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 mb-4 grid grid-cols-2">
+                    <li>سرير خشب.</li><li>كومودينو.</li><li>دولاب.</li><li>ترابيزة.</li><li>لوح زجاج.</li><li>كرسي خشب.</li><li>كنبة.</li><li>مكتبة.</li><li>أجهزة.</li>
+                </ul>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    وغيرها من عناصر الأثاث.<br>
+                    ويتم تحديد السعر الخاص بكل عنصر وفقًا لسياسة الشركة.<br>
+                    كما يمكن للإدارة تعديل الأسعار مستقبلًا عند تغير سياسة التسعير، دون الحاجة إلى تعديل النظام برمجيًا في كل مرة.
+                </p>
+            </div>
+
+            <!-- 9 -->
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-teal-100 dark:bg-teal-900 text-teal-600 dark:text-teal-300">9</div>
+                    <h2 class="text-xl md:text-2xl font-bold">سهولة إضافة عناصر الأثاث</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    عند قيام الموظف بإنشاء طلب جديد، لا يحتاج إلى كتابة كل عنصر يدويًا من البداية. يمكنه البحث عن العنصر المطلوب من قائمة الأسعار المعتمدة.<br>
+                    على سبيل المثال:<br>
+                    يبدأ الموظف بكتابة: <strong>"سرير"</strong><br>
+                    فيظهر له العنصر المسجل داخل النظام مع السعر المعتمد. ثم يمكن إضافته إلى الطلب وتحديد الكمية أو التفاصيل المطلوبة.
+                </p>
+                <p class="text-gray-600 dark:text-gray-400 font-bold mb-2">وبذلك يتم:</p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400">
+                    <li>تقليل وقت إدخال الطلب.</li>
+                    <li>تقليل أخطاء الكتابة.</li>
+                    <li>توحيد أسماء العناصر.</li>
+                    <li>توحيد الأسعار.</li>
+                    <li>تسهيل تدريب الموظفين على النظام.</li>
+                </ul>
+            </div>
+
+            <!-- 10 -->
+            <div class="glass-card rounded-2xl p-6 md:p-8 lg:col-span-2" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-orange-100 dark:bg-orange-900 text-orange-600 dark:text-orange-300">10</div>
+                    <h2 class="text-xl md:text-2xl font-bold">تقسيم الأثاث داخل الطلب إلى وحدات</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                    نظرًا لطبيعة عمليات نقل الأثاث، لا يكون الطلب عبارة عن قائمة مسطحة من العناصر فقط، وإنما قد يكون مقسمًا إلى وحدات أو غرف.
+                    لذلك يدعم التصور المقترح إمكانية تنظيم الأثاث داخل الطلب بصورة واضحة. مثال:
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700">
+                        <strong class="block text-primary dark:text-blue-400 mb-2">الوحدة الأولى – غرفة النوم</strong>
+                        <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                            <li>سرير خشب.</li><li>2 كومودينو.</li><li>دولاب.</li><li>تسريحة.</li><li>مرآة.</li><li>وغيرها من العناصر.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700">
+                        <strong class="block text-primary dark:text-blue-400 mb-2">الوحدة الثانية – السفرة</strong>
+                        <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                            <li>ترابيزة خشب.</li><li>لوح زجاج للترابيزة.</li><li>8 كراسي خشب.</li><li>وغيرها.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700">
+                        <strong class="block text-primary dark:text-blue-400 mb-2">الوحدة الثالثة – غرفة المعيشة</strong>
+                        <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                            <li>كنبة.</li><li>كرسي.</li><li>ترابيزة.</li><li>مكتبة.</li><li>وغيرها.</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mt-4">
+                    وهكذا يمكن للموظف بناء طلب نقل كامل يعكس المحتويات الفعلية للأثاث المطلوب نقله بشكل منظم.
+                </p>
+            </div>
+
+            <!-- 11 -->
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-300">11</div>
+                    <h2 class="text-xl md:text-2xl font-bold">احتساب إجمالي الطلب</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    يتم احتساب قيمة الطلب بناءً على العناصر والأسعار والكميات التي تم إدخالها. وبذلك يستطيع الموظف الوصول إلى:
+                </p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 mb-4">
+                    <li>قيمة كل عنصر.</li>
+                    <li>كمية كل عنصر.</li>
+                    <li>قيمة الوحدة.</li>
+                    <li>إجمالي الطلب.</li>
+                    <li>إجمالي المدفوع.</li>
+                    <li>إجمالي المتبقي.</li>
+                </ul>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    مع إمكانية تعديل البيانات وفقًا للصلاحيات المسموح بها لكل مستخدم.
+                </p>
+            </div>
+
+            <!-- 12 -->
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300">12</div>
+                    <h2 class="text-xl md:text-2xl font-bold">إدارة الدفعات والمبالغ المستحقة</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    يدعم النظام تسجيل الدفعات المرتبطة بكل طلب. على سبيل المثال:
+                </p>
+                <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-xl text-gray-700 dark:text-gray-300 mb-4 font-mono text-sm leading-relaxed">
+                    إذا كانت قيمة طلب النقل: 5,000 جنيه<br>
+                    وقام العميل بدفع مقدم: 1,000 جنيه<br>
+                    يقوم النظام تلقائيًا بإظهار:<br>
+                    - إجمالي الطلب: 5,000 جنيه<br>
+                    - المدفوع: 1,000 جنيه<br>
+                    - المتبقي: 4,000 جنيه
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    ويمكن تسجيل دفعات إضافية لاحقًا، بحيث يتم تحديث الرصيد المستحق بشكل تلقائي. ويتيح ذلك للإدارة معرفة المبالغ المحصلة والمبالغ التي ما زالت مستحقة على الطلبات.
+                </p>
+            </div>
+
+            <!-- 13 -->
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300">13</div>
+                    <h2 class="text-xl md:text-2xl font-bold">Dashboard الإدارة</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    يوفر النظام لوحة تحكم مركزية للإدارة تعرض ملخصًا واضحًا عن حالة الشركة والعمليات الحالية. ومن المعلومات التي يمكن عرضها:
+                </p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 grid grid-cols-2 mb-4">
+                    <li>إجمالي الطلبات.</li><li>الطلبات قيد التنفيذ.</li><li>الطلبات المكتملة.</li><li>الطلبات الملغاة.</li><li>إجمالي قيمة الطلبات.</li><li>إجمالي المبالغ المحصلة.</li><li>المبالغ المتبقية.</li><li>المبالغ المتوقع تحصيلها.</li><li>عدد العملاء.</li><li>مؤشرات الأداء الرئيسية.</li><li>إحصائيات حسب الفترات الزمنية.</li>
+                </ul>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    ويتم تصميم الـ Dashboard بحيث تكون المعلومات المهمة واضحة وسريعة القراءة، بدلًا من الاعتماد على البحث اليدوي داخل البيانات.
+                </p>
+            </div>
+
+            <!-- 14, 15, 16 (Reporting Section) -->
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300">14</div>
+                    <h2 class="text-xl md:text-2xl font-bold">التقارير</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    تعتبر التقارير من أهم أجزاء النظام، لأنها تحول البيانات اليومية التي يتم تسجيلها إلى معلومات تساعد الإدارة على فهم أداء الشركة.
+                </p>
+                <h3 class="font-bold text-lg mb-2">تقارير الطلبات</h3>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400">
+                    <li>عدد الطلبات.</li><li>الطلبات حسب الحالة.</li><li>الطلبات خلال فترة زمنية محددة.</li><li>الطلبات الخاصة بعميل معين.</li><li>تفاصيل كل طلب.</li><li>قيمة الطلبات.</li>
+                </ul>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-teal-100 dark:bg-teal-900 text-teal-600 dark:text-teal-300">15</div>
+                    <h2 class="text-xl md:text-2xl font-bold">التقارير المالية</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    يوفر النظام رؤية أوضح للحركة المالية المرتبطة بطلبات النقل. ومن أمثلة المؤشرات والتقارير:
+                </p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 mb-4">
+                    <li>إجمالي قيمة الطلبات.</li><li>إجمالي المدفوعات.</li><li>إجمالي المبالغ المتبقية.</li><li>المبالغ المتوقع تحصيلها.</li><li>المدفوعات خلال فترة معينة.</li><li>المبالغ المرتبطة بطلبات محددة.</li><li>تحليل الحركة المالية حسب الفترة الزمنية.</li>
+                </ul>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">ويتم تحديد التفاصيل النهائية للتقارير وفقًا لاحتياجات الشركة بعد اعتماد الشكل النهائي للنظام.</p>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-orange-100 dark:bg-orange-900 text-orange-600 dark:text-orange-300">16</div>
+                    <h2 class="text-xl md:text-2xl font-bold">تحليل العملاء</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    يمكن استخدام بيانات العملاء المسجلة داخل النظام لإنشاء تقارير وتحليلات تساعد الإدارة على فهم قاعدة العملاء. مثل:
+                </p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 mb-4">
+                    <li>عدد العملاء.</li><li>العملاء الأكثر تعاملًا.</li><li>عدد الطلبات لكل عميل.</li><li>قيمة تعاملات العميل.</li><li>الطلبات السابقة.</li><li>إجمالي المدفوعات.</li><li>المبالغ المستحقة.</li>
+                </ul>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">ويمكن أن تساعد هذه البيانات الإدارة في بناء رؤية أوضح حول طبيعة العملاء وحجم التعاملات.</p>
+            </div>
+
+            <!-- 17, 18, 19 -->
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-300">17</div>
+                    <h2 class="text-xl md:text-2xl font-bold">البحث والفلترة</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    تم تصميم النظام ليكون قائمًا على الوصول السريع إلى المعلومات. لذلك يمكن توفير إمكانيات البحث والفلترة داخل الوحدات المختلفة، مثل:
+                </p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 mb-4">
+                    <li>البحث عن العملاء.</li><li>البحث عن الطلبات.</li><li>البحث عن عناصر الأثاث.</li><li>الفلترة حسب حالة الطلب.</li><li>الفلترة حسب التاريخ.</li><li>الفلترة حسب العميل.</li><li>الفلترة حسب البيانات المالية.</li>
+                </ul>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">ويمكن تطوير الفلاتر وفقًا للمتطلبات النهائية التي يتم اعتمادها أثناء مرحلة تحليل النظام.</p>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300">18</div>
+                    <h2 class="text-xl md:text-2xl font-bold">تصدير البيانات</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    يمكن توفير إمكانية تصدير البيانات والتقارير إلى ملفات Excel. ويمكن استخدام ذلك في:
+                </p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 mb-4">
+                    <li>أرشفة البيانات.</li><li>مشاركة التقارير.</li><li>التحليل الخارجي.</li><li>إعداد التقارير الداخلية.</li><li>الاحتفاظ بنسخ من البيانات.</li><li>استخدام البيانات في العمليات الإدارية والمحاسبية عند الحاجة.</li>
+                </ul>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">ويتم تحديد الجداول والتقارير القابلة للتصدير ضمن النطاق النهائي للنظام.</p>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300">19</div>
+                    <h2 class="text-xl md:text-2xl font-bold">التواصل مع العملاء والاستطلاع</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    يتضمن التصور إمكانية التواصل المباشر مع العملاء من خلال النظام وفقًا لقنوات التواصل المعتمدة. ومن الاستخدامات المقترحة:
+                </p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 mb-4">
+                    <li>التواصل مع العميل بعد تنفيذ الطلب.</li><li>طلب تقييم الخدمة.</li><li>استطلاع رأي العميل.</li><li>إرسال رسائل مرتبطة بالخدمة.</li><li>متابعة رضا العملاء.</li>
+                </ul>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">ويمكن أن تكون هذه الوحدة أساسًا لتطوير نظام أكثر تكاملًا لإدارة تجربة العميل مستقبلًا.</p>
+            </div>
+
+            <!-- 20 & 21 Users & Permissions -->
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300">20</div>
+                    <h2 class="text-xl md:text-2xl font-bold">إدارة المستخدمين</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    يتيح النظام للإدارة التحكم في المستخدمين الذين لديهم صلاحية الدخول إلى النظام. ومن الوظائف الأساسية:
+                </p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400">
+                    <li>إضافة مستخدم جديد.</li><li>تعديل بيانات المستخدم.</li><li>تحديد نوع الحساب.</li><li>تفعيل المستخدم.</li><li>إلغاء تفعيل المستخدم.</li><li>التحكم في الصلاحيات.</li><li>منع الحسابات غير المفعلة من استخدام النظام.</li>
+                </ul>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 md:p-8 lg:col-span-2" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-teal-100 dark:bg-teal-900 text-teal-600 dark:text-teal-300">21</div>
+                    <h2 class="text-xl md:text-2xl font-bold">نظام الصلاحيات</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    يعتمد النظام على مبدأ أن المستخدم يرى فقط الوظائف التي تسمح له صلاحياته باستخدامها. ومن أمثلة أنواع الحسابات:
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                    <div>
+                        <strong class="block text-primary dark:text-blue-400 mb-2">الموظف</strong>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm mb-2">يتمكن من الوصول إلى الوظائف التشغيلية المطلوبة لتنفيذ مهامه اليومية، مثل:</p>
+                        <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                            <li>إنشاء الطلبات.</li><li>إدارة بيانات العملاء وفق الصلاحيات.</li><li>إضافة عناصر الأثاث.</li><li>متابعة الطلبات.</li><li>تسجيل البيانات المسموح له بها.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <strong class="block text-primary dark:text-blue-400 mb-2">المدير / الإدارة</strong>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm mb-2">يمتلك صلاحيات أوسع لإدارة النظام، مثل:</p>
+                        <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                            <li>إدارة المستخدمين.</li><li>إدارة الأسعار.</li><li>إدارة البيانات الأساسية.</li><li>الاطلاع على التقارير.</li><li>متابعة المؤشرات المالية.</li><li>إدارة العملاء والطلبات.</li><li>التحكم في الصلاحيات.</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">ويمكن تخصيص الصلاحيات بشكل أكثر تفصيلًا حسب الهيكل الإداري للشركة بعد اعتماد المتطلبات النهائية.</p>
+            </div>
+
+            <!-- 22, 23, 24 UX/UI, Responsive, Security -->
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-orange-100 dark:bg-orange-900 text-orange-600 dark:text-orange-300">22</div>
+                    <h2 class="text-xl md:text-2xl font-bold">تجربة الاستخدام وواجهة النظام UX/UI</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    سيتم تصميم النظام بحيث يكون عمليًا وسهل الاستخدام، وليس مجرد واجهة لعرض البيانات. الهدف الأساسي من التصميم هو أن يستطيع الموظف تنفيذ المهام اليومية بأقل عدد ممكن من الخطوات. ومن مبادئ التصميم:
+                </p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 mb-4 grid grid-cols-2">
+                    <li>وضوح المعلومات.</li><li>سهولة البحث.</li><li>سرعة إضافة البيانات.</li><li>تقليل الحقول غير الضرورية.</li><li>ترتيب منطقي للعمليات.</li><li>وضوح حالة الطلب.</li><li>وضوح المبالغ والمدفوعات.</li><li>سهولة الوصول إلى الإجراءات المهمة.</li><li>تصميم مناسب للاستخدام اليومي المتكرر.</li>
+                </ul>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">وسيتم مراعاة أن المستخدم قد يكون بحاجة إلى إدخال طلب كامل بسرعة أثناء التعامل مع العميل.</p>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-300">23</div>
+                    <h2 class="text-xl md:text-2xl font-bold">Responsive Design</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    سيكون النظام Responsive بالكامل، بحيث يمكن استخدامه على مختلف أحجام الشاشات والأجهزة. ويشمل ذلك:
+                </p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 mb-4">
+                    <li>الهواتف المحمولة.</li><li>الأجهزة اللوحية.</li><li>أجهزة اللابتوب.</li><li>أجهزة Desktop.</li><li>أجهزة Mac.</li>
+                </ul>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">وبذلك لا يكون النظام مرتبطًا بجهاز معين، ويمكن الوصول إليه واستخدامه وفق بيئة العمل المتاحة للشركة.</p>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300">24</div>
+                    <h2 class="text-xl md:text-2xl font-bold">الأمان وإدارة الوصول</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    سيتم بناء النظام مع مراعاة أساسيات الأمان وإدارة الوصول إلى البيانات. ويشمل ذلك:
+                </p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 mb-4">
+                    <li>تسجيل الدخول للمستخدمين.</li><li>التحكم في الصلاحيات.</li><li>حماية الوظائف حسب نوع الحساب.</li><li>منع المستخدم غير المصرح له من الوصول إلى الوظائف الإدارية.</li><li>إدارة حالة الحسابات.</li><li>تنظيم الوصول إلى بيانات الشركة.</li>
+                </ul>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">كما سيتم تصميم النظام بحيث تكون قابلية تطوير مستويات أمان وتحكم إضافية مستقبلًا ممكنة حسب احتياجات الشركة.</p>
+            </div>
+
+            <!-- 25 & 26 Data & Workflow -->
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300">25</div>
+                    <h2 class="text-xl md:text-2xl font-bold">تنظيم البيانات</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    من أهم أهداف المشروع أن تصبح بيانات الشركة منظمة ومترابطة بدلًا من وجودها في ملفات أو مصادر متعددة. فمثلًا:
+                </p>
+                <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-xl text-center text-sm font-semibold text-primary dark:text-blue-300 leading-loose">
+                    العميل يرتبط بـ: طلبات النقل<br>
+                    والطلب يرتبط بـ: تفاصيل الأثاث<br>
+                    والأثاث يرتبط بـ: الأسعار<br>
+                    والطلب يرتبط بـ: الدفعات
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mt-4 text-center font-bold">
+                    وبذلك يمكن للنظام تكوين صورة متكاملة عن كل عملية نقل.
+                </p>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 md:p-8 lg:col-span-2" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300">26</div>
+                    <h2 class="text-xl md:text-2xl font-bold">دورة العمل المقترحة</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">يمكن تلخيص دورة تشغيل النظام كالتالي:</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-600 dark:text-gray-400">
+                    <div><strong>المرحلة الأولى – العميل:</strong> تسجيل بيانات العميل أو البحث عنه إذا كان موجودًا مسبقًا.</div>
+                    <div><strong>المرحلة الثانية – إنشاء الطلب:</strong> إنشاء طلب نقل جديد وربطه بالعميل.</div>
+                    <div><strong>المرحلة الثالثة – موعد النقل:</strong> تحديد موعد النقل والبيانات المطلوبة.</div>
+                    <div><strong>المرحلة الرابعة – بناء محتويات الطلب:</strong> إضافة وحدات الأثاث، ثم إضافة العناصر الموجودة داخل كل وحدة.</div>
+                    <div><strong>المرحلة الخامسة – التسعير:</strong> اختيار العناصر من قائمة الأسعار المعتمدة، مع احتساب القيمة بناءً على الأسعار والكميات.</div>
+                    <div><strong>المرحلة السادسة – مراجعة الطلب:</strong> عرض ملخص الطلب وإجمالي القيمة والمدفوع والمتبقي.</div>
+                    <div><strong>المرحلة السابعة – الدفعات:</strong> تسجيل المقدم وأي دفعات لاحقة.</div>
+                    <div><strong>المرحلة الثامنة – التنفيذ:</strong> متابعة حالة الطلب حتى إتمام عملية النقل.</div>
+                    <div><strong>المرحلة التاسعة – الإغلاق:</strong> تغيير حالة الطلب إلى "تم" بعد إتمام العملية.</div>
+                    <div><strong>المرحلة العاشرة – التقارير:</strong> تنعكس البيانات تلقائيًا داخل التقارير والإحصائيات والتحليلات.</div>
+                </div>
+            </div>
+
+            <!-- 27, 28, 29 -->
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-teal-100 dark:bg-teal-900 text-teal-600 dark:text-teal-300">27</div>
+                    <h2 class="text-xl md:text-2xl font-bold">القيمة التشغيلية للنظام للشركة</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    لا يقتصر دور النظام على استبدال الورق أو ملفات Excel، وإنما يهدف إلى إنشاء نظام تشغيل رقمي للشركة. فبدلًا من أن تكون المعلومات موزعة بين:
+                </p>
+                <ul class="flex flex-wrap gap-2 text-sm text-primary dark:text-blue-300 font-semibold mb-4">
+                    <li class="bg-blue-100 dark:bg-blue-900/50 px-2 py-1 rounded">موظف</li><li class="bg-blue-100 dark:bg-blue-900/50 px-2 py-1 rounded">ملفات</li><li class="bg-blue-100 dark:bg-blue-900/50 px-2 py-1 rounded">أوراق</li><li class="bg-blue-100 dark:bg-blue-900/50 px-2 py-1 rounded">محادثات</li><li class="bg-blue-100 dark:bg-blue-900/50 px-2 py-1 rounded">جداول منفصلة</li>
+                </ul>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-2">تصبح المعلومات موجودة داخل نظام واحد، ويمكن الوصول إليها وفق الصلاحيات. وهذا يساعد على:</p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 text-sm">
+                    <li>تقليل الاعتماد على الذاكرة الشخصية للموظفين.</li><li>تقليل فقدان البيانات.</li><li>تسريع الوصول للمعلومات.</li><li>تحسين متابعة العملاء والطلبات.</li><li>تحسين الرقابة الإدارية.</li><li>توفير بيانات قابلة للتحليل.</li><li>دعم القرارات الإدارية.</li>
+                </ul>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-orange-100 dark:bg-orange-900 text-orange-600 dark:text-orange-300">28</div>
+                    <h2 class="text-xl md:text-2xl font-bold">قابلية التوسع والتطوير</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    تم وضع التصور الأساسي للنظام بحيث لا يكون مغلقًا على الوظائف الحالية فقط. ويمكن مستقبلًا إضافة وظائف جديدة حسب نمو الشركة واحتياجات التشغيل، مثل:
+                </p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 text-sm grid grid-cols-2 mb-4">
+                    <li>تطبيق مخصص للموظفين.</li><li>تطبيق أو Portal للعملاء.</li><li>إدارة فرق العمل.</li><li>إدارة سيارات النقل.</li><li>إدارة السائقين.</li><li>جدولة عمليات النقل.</li><li>خرائط ومواقع.</li><li>إشعارات للعملاء.</li><li>رسائل WhatsApp آلية.</li><li>تقييمات العملاء.</li><li>نظام محاسبي أكثر تفصيلًا.</li><li>تقارير متقدمة.</li><li>لوحات تحكم متخصصة.</li><li>تكاملات مع أنظمة خارجية.</li><li>أتمتة بعض العمليات.</li><li>خصائص تعتمد على الذكاء الاصطناعي مستقبلًا.</li>
+                </ul>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-xs">ولا يعني ذكر هذه الوظائف أنها جزء من النطاق الأساسي الحالي، وإنما توضح قابلية النظام للتوسع مستقبلًا.</p>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-300">29</div>
+                    <h2 class="text-xl md:text-2xl font-bold">الرؤية التقنية للمشروع</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    سيتم تطوير النظام باستخدام تقنيات حديثة مناسبة لبناء أنظمة الأعمال والإدارة، مع التركيز على:
+                </p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 mb-4 grid grid-cols-2">
+                    <li>الأداء.</li><li>قابلية التوسع.</li><li>سهولة الصيانة.</li><li>أمان البيانات.</li><li>تنظيم الكود.</li><li>فصل المكونات والوظائف.</li><li>سهولة إضافة Features مستقبلية.</li><li>تجربة مستخدم عملية.</li>
+                </ul>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">وسيتم تحديد التفاصيل التقنية النهائية، والبنية التحتية، والاستضافة، وآلية النشر والتشغيل ضمن مرحلة اعتماد المتطلبات والتصميم النهائي.</p>
+            </div>
+
+            <!-- 30, 31, 32 Scope & Process -->
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300">30</div>
+                    <h2 class="text-xl md:text-2xl font-bold">نطاق المرحلة الحالية</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    هذا المستند يمثل التصور الفني المبدئي للنظام، ويهدف إلى توضيح الرؤية والوظائف الأساسية المقترحة وآلية عمل النظام. ويتم بعد اعتماد التصور عقد مرحلة تفصيلية لتثبيت:
+                </p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 text-sm grid grid-cols-2">
+                    <li>الـ Features النهائية.</li><li>تفاصيل كل شاشة.</li><li>تفاصيل كل Workflow.</li><li>الصلاحيات النهائية.</li><li>التقارير النهائية.</li><li>الحقول المطلوبة.</li><li>آلية التسعير.</li><li>آلية الدفعات.</li><li>قنوات التواصل.</li><li>التصميم النهائي للواجهات.</li><li>أي تعديلات أو إضافات خاصة.</li>
+                </ul>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300">31</div>
+                    <h2 class="text-xl md:text-2xl font-bold">قابلية التعديل أثناء مرحلة الاعتماد</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    هذا التصور ليس قيدًا نهائيًا على النظام. بل يمثل الهيكل المبدئي المقترح الذي يمكن من خلاله مناقشة احتياجات الشركة وتعديل التفاصيل قبل بدء التنفيذ. وبناءً على جلسات المراجعة والاعتماد يمكن:
+                </p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 text-sm">
+                    <li>إضافة Features.</li><li>حذف Features غير مطلوبة.</li><li>تعديل طريقة عمل بعض الوظائف.</li><li>تعديل الصلاحيات.</li><li>تعديل التقارير.</li><li>إضافة بيانات جديدة.</li><li>تطوير Workflow مختلف.</li><li>تعديل تصميم الواجهات.</li><li>إضافة متطلبات خاصة بالشركة.</li>
+                </ul>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-sm font-bold mt-2">والهدف هو الوصول إلى نطاق عمل واضح ومتفق عليه قبل بدء التنفيذ.</p>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300">32</div>
+                    <h2 class="text-xl md:text-2xl font-bold">المخرجات المتوقعة</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    بعد اعتماد النطاق النهائي وتنفيذ المشروع، يكون لدى الشركة نظام رقمي موحد يساعدها على إدارة:
+                </p>
+                <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-xl text-center font-bold text-primary dark:text-blue-300 leading-loose">
+                    العملاء + الطلبات + الأثاث + التسعير + الدفعات + المستخدمين + الصلاحيات + التقارير + التحليلات
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mt-4 text-center">
+                    ضمن منظومة واحدة قابلة للاستخدام من مختلف الأجهزة.
+                </p>
+            </div>
+
+            <!-- 33, 34 -->
+            <div class="glass-card rounded-2xl p-6 md:p-8 lg:col-span-2" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-teal-100 dark:bg-teal-900 text-teal-600 dark:text-teal-300">33</div>
+                    <h2 class="text-xl md:text-2xl font-bold">منهجية العمل المقترحة</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">يتم تنفيذ المشروع على مراحل منظمة لضمان الوصول إلى النتيجة المطلوبة.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600 dark:text-gray-400">
+                    <div class="bg-white dark:bg-gray-800 p-3 rounded-lg border border-gray-100 dark:border-gray-700"><strong>المرحلة الأولى – تحليل واعتماد المتطلبات:</strong> مراجعة التصور الفني مع الشركة وتحديد التفاصيل النهائية.</div>
+                    <div class="bg-white dark:bg-gray-800 p-3 rounded-lg border border-gray-100 dark:border-gray-700"><strong>المرحلة الثانية – تصميم تجربة المستخدم:</strong> تحديد شكل الواجهات، ترتيب البيانات، وطريقة تنفيذ العمليات اليومية.</div>
+                    <div class="bg-white dark:bg-gray-800 p-3 rounded-lg border border-gray-100 dark:border-gray-700"><strong>المرحلة الثالثة – التطوير:</strong> تنفيذ النظام والوحدات المتفق عليها وفق النطاق المعتمد.</div>
+                    <div class="bg-white dark:bg-gray-800 p-3 rounded-lg border border-gray-100 dark:border-gray-700"><strong>المرحلة الرابعة – الاختبار:</strong> اختبار الوظائف والتأكد من سلامة العمليات والبيانات والصلاحيات.</div>
+                    <div class="bg-white dark:bg-gray-800 p-3 rounded-lg border border-gray-100 dark:border-gray-700"><strong>المرحلة الخامسة – المراجعة والاعتماد:</strong> مراجعة النظام مع الشركة وإجراء التعديلات المتفق عليها ضمن نطاق المشروع.</div>
+                    <div class="bg-white dark:bg-gray-800 p-3 rounded-lg border border-gray-100 dark:border-gray-700"><strong>المرحلة السادسة – التجهيز للتشغيل:</strong> تجهيز النظام للاستخدام الفعلي وتسليم النسخة النهائية وفق الاتفاق.</div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 md:p-8" data-aos="fade-up">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="badge-number bg-orange-100 dark:bg-orange-900 text-orange-600 dark:text-orange-300">34</div>
+                    <h2 class="text-xl md:text-2xl font-bold">العرض المالي والجدول الزمني</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4 text-sm">
+                    سيتم تقديم العرض المالي والـ Timeline النهائي بعد اعتماد التفاصيل الفنية والشكل النهائي للنظام. وذلك لضمان أن يكون التسعير والمدة مبنيين على نطاق عمل واضح ومحدد، وليس على تقدير مبدئي قد يتغير نتيجة إضافة أو حذف وظائف أثناء مرحلة التحليل.<br><br>
+                    وبعد اعتماد: Features + Workflows + UI/UX + Permissions + Reports + Final Scope<br>
+                    سيتم إعداد:
+                </p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 text-sm">
+                    <li>العرض المالي النهائي.</li><li>الجدول الزمني للتنفيذ.</li><li>مراحل الدفع.</li><li>مراحل التسليم.</li><li>تفاصيل نطاق العمل النهائي.</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- Conclusion (35) -->
+        <div class="mt-12 glass-card rounded-2xl p-6 md:p-10 border-t-4 border-primary dark:border-blue-500" data-aos="zoom-in">
+            <div class="flex items-center justify-center gap-4 mb-6">
+                <div class="badge-number bg-primary text-white">35</div>
+                <h2 class="text-2xl md:text-3xl font-extrabold gradient-text">الخلاصة</h2>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 leading-loose text-center text-lg md:text-xl">
+                المشروع المقترح ليس مجرد برنامج لتسجيل طلبات نقل الأثاث، وإنما هو خطوة نحو التحول الرقمي الكامل لعمليات الشركة اليومية. فالنظام يهدف إلى تحويل دورة العمل من عملية تعتمد على التسجيل اليدوي وتشتت المعلومات إلى منظومة رقمية مترابطة تبدأ من العميل، وتمر بطلب النقل ومحتوياته وتسعيره ودفعاته، وتنتهي بالتقارير والتحليلات التي تمنح الإدارة رؤية واضحة عن أداء الشركة.<br><br>
+                ومن خلال وجود قاعدة بيانات موحدة، ونظام تسعير مركزي، وإدارة للعملاء والطلبات والدفعات، ونظام صلاحيات، وتقارير وتحليلات، تصبح الشركة أكثر قدرة على تنظيم عملياتها اليومية، الوصول إلى بياناتها، متابعة أعمالها، وقياس أدائها.<br><br>
+                وسيتم بناء النظام بحيث يكون قابلًا للتوسع والتطوير، بما يسمح بإضافة خدمات وخصائص جديدة مستقبلًا مع نمو احتياجات الشركة.
+            </p>
+            <div class="mt-8 text-center">
+                <div class="inline-block bg-primary text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-blue-500/30">
+                    Moemen Team
+                    <span class="block text-xs font-normal opacity-80 mt-1 uppercase tracking-widest">Technology. Automation. Digital Solutions.</span>
+                </div>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">هذا العرض يمثل التصور الفني المبدئي للمشروع، وتخضع التفاصيل النهائية للنقاش والاعتماد قبل بدء التنفيذ.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Logic Script -->
+    <script>
+        // Initialize Animations
+        AOS.init({
+            once: true,
+            offset: 50,
+            duration: 800,
+            easing: 'ease-out-cubic',
+        });
+
+        // Theme Logic
+        function toggleTheme() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Initialize Theme from localStorage or default to light
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('light');
+        }
+    </script>
+</body>
+</html>

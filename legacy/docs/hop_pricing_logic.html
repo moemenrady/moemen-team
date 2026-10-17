@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Logic – Ride Publishing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #2b2d42;
+            --text-muted: #6c757d;
+            --border-color: #e9ecef;
+            --highlight-bg: #f8f9fa;
+            --formula-bg: #e7f1ff;
+            --formula-border: #0d6efd;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .section-title span.badge {
+            background-color: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            font-size: 1rem;
+            margin-left: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-right: 1.5rem;
+        }
+
+        ul li {
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        ul li::before {
+            content: "•";
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.5em;
+            position: absolute;
+            right: -1.2rem;
+            top: -5px;
+        }
+
+        .formula-box {
+            background-color: var(--formula-bg);
+            border-right: 4px solid var(--formula-border);
+            padding: 1.2rem;
+            margin: 1rem 0;
+            border-radius: 4px 8px 8px 4px;
+            direction: ltr; /* اتجاه من اليسار لليمين للمعادلات */
+            text-align: left;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            color: #052c65;
+            font-size: 1.1rem;
+        }
+
+        .example-box {
+            background-color: var(--highlight-bg);
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .example-box strong {
+            color: var(--primary-color);
+        }
+
+        .summary-section {
+            background-color: #fdfdfe;
+            border: 1px solid #d1e7dd;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 3rem;
+        }
+
+        .summary-section h2 {
+            color: #0f5132;
+            margin-bottom: 1.5rem;
+        }
+
+        .note-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffe69c;
+            color: #664d03;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .note-box strong {
+            color: #997404;
+        }
+
+        /* تحسينات للشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .formula-box {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Pricing Logic – Ride Publishing</h1>
+            <p style="color: var(--text-muted);">توثيق منطق التسعير الخاص بنشر الرحلات (Light Mode)</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><span class="badge">1</span> مصدر التسعير</h2>
+            <p>سعر الرحلة يعتمد على عاملين أساسيين:</p>
+            <ul>
+                <li>مسافة الرحلة.</li>
+                <li>سعر الكيلومتر الخاص بنوع المركبة.</li>
+            </ul>
+            <p><em>ملاحظة:</em> سعر الكيلومتر يتم أخذه من نوع المركبة المختارة.</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><span class="badge">2</span> حساب المسافة</h2>
+            <p>يتم الحصول على مسافة الرحلة من <strong>Google Directions API</strong> بناءً على:</p>
+            <ul>
+                <li>نقطة الانطلاق.</li>
+                <li>نقطة الوصول.</li>
+                <li>والمسار المختار إذا كان هناك أكثر من Route.</li>
+            </ul>
+            <p>Google يعيد المسافة بالمتر. يتم تحويل المسافة إلى وحدة النظام وتقريبها إلى رقم صحيح قبل استخدامها:</p>
+            <div class="formula-box">
+                Kilometers (KM) = Meters / 1000<br>
+                Miles = Meters / 1609.34
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><span class="badge">3</span> حساب السعر المقترح</h2>
+            <p>السعر المقترح لكل مقعد يتم حسابه بالمعادلة:</p>
+            <div class="formula-box">
+                Recommended Price = Distance × Price per KM
+            </div>
+            <div class="example-box">
+                <strong>مثال:</strong><br>
+                المسافة: 150 KM | سعر الكيلومتر: 5<br>
+                السعر المقترح = 150 × 5 = <strong>750</strong><br>
+                <em>(يبدأ السعر الأساسي للمستخدم بنفس قيمة السعر المقترح).</em>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><span class="badge">4</span> تعديل السعر بواسطة المستخدم</h2>
+            <p>يمكن للمستخدم تعديل السعر يدويًا بالزيادة أو النقصان. كل ضغطة تؤدي إلى:</p>
+            <ul>
+                <li>زيادة السعر بمقدار <strong>10</strong>.</li>
+                <li>أو تقليل السعر بمقدار <strong>10</strong>.</li>
+            </ul>
+            <p>لكن المستخدم لا يستطيع تجاوز الحدود المسموح بها.</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><span class="badge">5</span> الحد الأدنى والأقصى للسعر</h2>
+            <p>يتم استخدام قيمة <code>Price Variation</code> لتحديد نسبة السماح بتعديل السعر حول السعر المقترح.</p>
+            <div class="example-box">
+                <strong>مثال:</strong> إذا كان السعر المقترح = 750، و Price Variation = 20%، فتكون الحدود:
+                <ul style="margin-top: 10px;">
+                    <li><strong>الحد الأدنى:</strong> 600</li>
+                    <li><strong>السعر المقترح:</strong> 750</li>
+                    <li><strong>الحد الأقصى:</strong> 900</li>
+                </ul>
+                <p style="margin-top: 10px;">أي أن المستخدم يستطيع اختيار أي سعر داخل هذا النطاق باستخدام الزيادة أو النقصان بقيمة 10.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><span class="badge">6</span> أسعار محطات التوقف (Stopovers)</h2>
+            <p>عند إضافة محطات توقف، يتم تقسيم الرحلة إلى أجزاء حسب المسار. يتم حساب سعر كل جزء بناءً على:</p>
+            <div class="formula-box">
+                Stopover Price = Leg Distance × Price per KM
+            </div>
+            <p>ويتم إنشاء سعر مقترح لكل Stopover. كما يمكن للمستخدم تعديل سعر الـ Stopover بالزيادة أو النقصان بمقدار 10.</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><span class="badge">7</span> الضرائب والعمولة</h2>
+            <p>يوجد في النظام منطق منفصل لحساب:</p>
+            <ul>
+                <li>Tax (الضرائب)</li>
+                <li>Admin Commission (عمولة الإدارة)</li>
+            </ul>
+            <p>لكن حسب الـ Flow الحالي، هذه القيم <strong>لا تدخل في حساب سعر المقعد عند نشر الرحلة</strong>. سعر المقعد يعتمد فقط على <code>Distance × Price per KM</code> مع إمكانية تعديله ضمن النطاق المسموح.</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><span class="badge">8</span> حفظ السعر</h2>
+            <p>عند الضغط على <strong>Publish Ride</strong>:</p>
+            <ul>
+                <li>يتم أخذ السعر النهائي الذي اختاره المستخدم وحفظه كسعر لكل مقعد مع بيانات الرحلة في <strong>Firestore</strong>.</li>
+                <li>السعر المحفوظ هو السعر النهائي بعد أي تعديلات قام بها المستخدم.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><span class="badge">9</span> مكان تنفيذ التسعير حاليًا</h2>
+            <p>التسعير الحالي يتم داخل <strong>Flutter App</strong>. التدفق الحالي هو كالتالي:</p>
+            <div class="formula-box" style="font-size: 0.9rem;">
+                Flutter → Google Directions API → Fetch Distance → Calculate Price in Flutter → User Adjusts Price → Save Price in Firestore
+            </div>
+            <p>أي أن <em>Firestore</em> لا يقوم حاليًا بإعادة حساب السعر قبل حفظه.</p>
+        </div>
+
+        <div class="summary-section">
+            <h2><span class="badge" style="background-color: #198754;">10</span> ملخص المعادلات</h2>
+            
+            <p><strong>السعر المقترح:</strong></p>
+            <div class="formula-box">Distance × Price per KM</div>
+
+            <p><strong>الحد الأدنى:</strong></p>
+            <div class="formula-box">Recommended Price − (Recommended Price × Price Variation / 100)</div>
+
+            <p><strong>الحد الأقصى:</strong></p>
+            <div class="formula-box">Recommended Price + (Recommended Price × Price Variation / 100)</div>
+
+            <p><strong>تعديل السعر:</strong></p>
+            <div class="formula-box">+10 / −10 لكل عملية تعديل</div>
+
+            <p><strong>أسعار Stopover:</strong></p>
+            <div class="formula-box">Stopover Distance × Price per KM</div>
+
+            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #d1e7dd;">
+
+            <h3>الخلاصة</h3>
+            <p>النظام الحالي يعتمد على المسافة ونوع المركبة لتحديد السعر المقترح، ثم يسمح للسائق بتعديل السعر داخل نسبة محددة حول السعر المقترح. بعد اختيار السعر النهائي، يتم حفظه مع الرحلة في Firestore.</p>
+
+            <div class="note-box">
+                <strong>ملاحظة معمارية:</strong> حاليًا الحساب النهائي يتم على التطبيق (Flutter) وليس على السيرفر، لذلك السعر المحفوظ يعتمد بشكل كلي على القيمة التي يرسلها التطبيق.
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

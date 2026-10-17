@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وثيقة نطاق العمل - تطبيق بيع وتوصيل اللحوم | moemen team</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* درجات البيبي بلو (Baby Blue Shades) */
+            --primary-color: #2C74B3;     /* أزرق داكن للقراءة */
+            --secondary-color: #89CFF0;   /* بيبي بلو أساسي */
+            --accent-color: #4DA8DA;      /* أزرق فاتح مميز */
+            --bg-color: #F0F8FF;          /* خلفية أليس بلو ناعمة */
+            --text-color: #1A374D;
+            --card-bg: #FFFFFF;
+            --border-color: #B4E4FF;
+            --hover-color: #D4F1F4;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* --- ترويسة الشركة (moemen team) --- */
+        .company-badge {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 15px 30px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(77, 168, 218, 0.3);
+            animation: slideDown 0.8s ease-out forwards;
+        }
+
+        .company-badge h2 {
+            font-size: 1.5rem;
+            margin: 0;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .company-badge a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .company-badge a:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* --- الترويسة الرئيسية --- */
+        .header {
+            background-color: var(--card-bg);
+            border-top: 5px solid var(--secondary-color);
+            padding: 40px 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            animation: fadeIn 1s ease-out forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: var(--secondary-color);
+            opacity: 0.1;
+            border-radius: 50%;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .header h2 {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .header-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            flex-wrap: wrap;
+            background: var(--hover-color);
+            padding: 10px;
+            border-radius: 8px;
+            display: inline-flex;
+        }
+
+        .header-desc {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- البطاقات والأقسام --- */
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            border-right: 5px solid var(--secondary-color);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .section-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-card:hover {
+            box-shadow: 0 8px 25px rgba(137, 207, 240, 0.2);
+            transform: translateY(-2px);
+            border-right-color: var(--primary-color);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            border-bottom: 2px dashed var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: 0;
+            width: 60px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+
+        h3.feature-title {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h3.feature-title::before {
+            content: "✦";
+            color: var(--secondary-color);
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        /* --- القوائم --- */
+        ul {
+            list-style-type: none;
+            padding-right: 20px;
+            margin-bottom: 20px;
+        }
+
+        ul li {
+            position: relative;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            padding-right: 25px;
+        }
+
+        ul li::before {
+            content: "✔";
+            color: var(--primary-color);
+            font-weight: bold;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        /* --- الجداول --- */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 25px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+            background-color: white;
+        }
+
+        table th, table td {
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            font-size: 1.05rem;
+        }
+
+        table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        table tr {
+            transition: background-color 0.3s ease;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #FAFCFF;
+        }
+
+        table tr:hover {
+            background-color: var(--hover-color);
+        }
+
+        table td:first-child {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* --- الملاحظات والتنبيهات --- */
+        .note-box {
+            background-color: #FFF9E6;
+            border-right: 4px solid #FFC107;
+            padding: 20px;
+            margin-top: 25px;
+            border-radius: 8px;
+            font-size: 1.05rem;
+        }
+
+        .highlight-box {
+            background-color: var(--hover-color);
+            border-right: 4px solid var(--accent-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        /* --- الفوتر --- */
+        .footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--text-color));
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .footer h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        .footer p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .footer a {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(137, 207, 240, 0.4);
+        }
+
+        .footer a:hover {
+            background-color: white;
+            transform: scale(1.05);
+        }
+
+        /* --- أزرار --- */
+        .print-btn {
+            display: block;
+            width: 250px;
+            margin: 30px auto;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(44, 116, 179, 0.3);
+        }
+
+        .print-btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(44, 116, 179, 0.4);
+        }
+
+        /* --- انيميشن --- */
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* --- الموبايل --- */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .company-badge { flex-direction: column; gap: 15px; text-align: center; }
+            .section-card { padding: 20px; }
+            table th, table td { padding: 10px; font-size: 0.95rem; }
+        }
+
+        /* --- الطباعة --- */
+        @media print {
+            body { background-color: white; padding: 0; }
+            .print-btn, .company-badge a, .footer a { display: none; }
+            .section-card { box-shadow: none; border: 1px solid #ddd; opacity: 1; transform: none; page-break-inside: avoid;}
+            .company-badge { background: white; color: black; border: 2px solid black; box-shadow: none; }
+            .company-badge * { color: black !important; }
+            .footer { background: white; color: black; border: 2px solid black; }
+            .footer * { color: black !important; }
+        }
+      html {
+    scroll-behavior: smooth;
+}
+    </style>
+  <style>
+    /* --- Pricing Options --- */
+
+    .pricing-options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        margin-top: 25px;
+    }
+
+    .pricing-option {
+        position: relative;
+        background: #ffffff;
+        border: 2px solid var(--border-color);
+        border-radius: 14px;
+        padding: 25px;
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+    .pricing-option:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(44, 116, 179, 0.12);
+        border-color: var(--accent-color);
+    }
+
+    .pricing-option.recommended {
+        border: 2px solid var(--primary-color);
+        box-shadow: 0 8px 25px rgba(44, 116, 179, 0.12);
+    }
+
+    .recommended-badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: linear-gradient(
+            135deg,
+            var(--primary-color),
+            var(--accent-color)
+        );
+        color: white;
+        padding: 6px 18px;
+        border-radius: 0 0 0 10px;
+        font-size: 0.85rem;
+        font-weight: 700;
+    }
+
+    .pricing-option-title {
+        color: var(--primary-color);
+        font-size: 1.35rem;
+        font-weight: 800;
+        margin-bottom: 8px;
+        padding-left: 80px;
+    }
+
+    .pricing-option-subtitle {
+        color: #666;
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+    }
+
+    .pricing-description {
+        color: #444;
+        font-size: 1rem;
+        line-height: 1.9;
+        margin-bottom: 20px;
+    }
+
+    .pricing-benefits {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .pricing-benefits li {
+        position: relative;
+        padding-right: 28px;
+        margin-bottom: 12px;
+        font-size: 0.98rem;
+        color: var(--text-color);
+    }
+
+    .pricing-benefits li::before {
+        content: "✓";
+        position: absolute;
+        right: 0;
+        top: 0;
+        color: var(--primary-color);
+        font-weight: 800;
+    }
+
+    .pricing-price {
+        margin-top: 25px;
+        padding-top: 18px;
+        border-top: 1px dashed var(--border-color);
+        text-align: center;
+    }
+
+    .pricing-price-label {
+        display: block;
+        font-size: 0.9rem;
+        color: #777;
+        margin-bottom: 3px;
+    }
+
+    .pricing-price-value {
+        display: block;
+        color: var(--primary-color);
+        font-size: 2rem;
+        font-weight: 800;
+    }
+
+    .pricing-price-currency {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #555;
+    }
+
+    .pricing-note {
+        margin-top: 25px;
+        background: var(--hover-color);
+        border-right: 4px solid var(--accent-color);
+        padding: 18px 20px;
+        border-radius: 8px;
+        font-size: 0.98rem;
+        color: var(--text-color);
+    }
+
+    @media (max-width: 768px) {
+        .pricing-options {
+            grid-template-columns: 1fr;
+        }
+
+        .pricing-option-title {
+            padding-left: 0;
+            padding-top: 25px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+    <div class="container">
+        
+        <!-- بادج الشركة المنفذة -->
+        <div class="company-badge">
+            <div>
+                <p style="margin:0; font-size: 0.9rem; opacity: 0.9;">الشركة المسؤولة عن التنفيذ</p>
+                <h2>moemen team</h2>
+            </div>
+            <a href="https://moemen-team.tech" target="_blank">moemen-team.tech</a>
+        </div>
+
+        <header class="header">
+            <h1>تطبيق بيع وتوصيل اللحوم</h1>
+            <h2>وثيقة نطاق العمل (Scope of Work)</h2>
+            
+            <div class="header-info">
+                <span>تطبيق جوال (Android / iOS)</span>
+                <span>+</span>
+                <span>لوحة تحكم إدارية على الويب</span>
+            </div>
+            
+            <p class="header-desc">
+                الإصدار v1.0 — للاعتماد<br>
+                تعرض هذه الوثيقة نطاق العمل المتفق عليه: وصف المشروع، المخطط الزمني بمراحله، قائمة الفيتشرز المشمولة، النقاط التي تحتاج قراراً من حضرتكم، والمتطلبات التي نحتاج استلامها لبدء التنفيذ.
+            </p>
+        </header>
+
+        <!-- القسم الأول -->
+        <div class="section-card animate-scroll">
+            <h2 class="section-title">1. تعريف بالمشروع</h2>
+            
+            <h3 class="feature-title">1.1 الفكرة</h3>
+            <p>تطبيق تجارة إلكترونية متخصص في بيع وتوصيل اللحوم داخل المملكة العربية السعودية. الفكرة الجوهرية أن المنتج ليس سلعة جاهزة ثابتة، بل سلعة يختار العميل تفاصيل تجهيزها: الحجم / الوزن، طريقة التقطيع، التغليف، الإضافات، وطريقة التجهيز — تماماً كما يطلبها من الملحمة، لكن من جواله.</p>
+
+            <h3 class="feature-title">1.2 مكوّنات المشروع</h3>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">المكوّن</th>
+                            <th>الوصف</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>تطبيق العميل</td>
+                            <td>تطبيق جوال يعمل على أندرويد و iOS من كود موّحد: تصفح، تخصيص المنتج، سلة، دفع، متابعة الطلب.</td>
+                        </tr>
+                        <tr>
+                            <td>لوحة التحكم الإدارية</td>
+                            <td>نظام ويب متكامل تُدار منه المنصة بالكامل: المنتجات، الطلبات، العملاء، العروض، البانرات، الإشعارات، الإحصائيات.</td>
+                        </tr>
+                        <tr>
+                            <td>الواجهة البرمجية (API)</td>
+                            <td>البنية التي تربط التطبيق بلوحة التحكم، ومجهّزة للربط المستقبلي بأنظمة أخرى دون إعادة بناء.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="feature-title">1.3 الركائز التي بُني عليها النظام</h3>
+            <ul>
+                <li><strong>تحكم كامل بلا برمجة:</strong> كل ما يظهر للعميل — منتج، صنف، حجم، خيار تجهيز، سعر، بانر، عرض، نص إشعار — يُدار من لوحة التحكم، ويظهر التغيير في التطبيق فوراً دون تحديث التطبيق على المتاجر.</li>
+                <li><strong>خيارات تجهيز مرنة:</strong> إمكانية إنشاء أي عدد من خيارات التجهيز وربطها بالمنتجات المناسبة، وتعديلها في أي وقت.</li>
+                <li><strong>العرض حسب المنطقة:</strong> كل عميل يرى المنتجات المتاحة في منطقته فقط، فلا يطلب ما لا يمكن توصيله إليه.</li>
+                <li><strong>دفع متعدد:</strong> بطاقات بنكية + تابي + تمارة، مع بنية تسمح بإضافة طرق دفع أخرى لاحقاً.</li>
+                <li><strong>جاهزية للتوسّع:</strong> البنية تسمح مستقبلاً بإضافة مناطق ومنتجات وخيارات جديدة، وربط أنظمة خارجية، دون إعادة بناء المشروع.</li>
+            </ul>
+        </div>
+
+        <!-- القسم الثاني -->
+        <div class="section-card animate-scroll">
+            <h2 class="section-title">2. المخطط الزمني للمشروع</h2>
+            <p>ينفَّذ المشروع على ثلاث مراحل متتابعة:</p>
+
+            <h3 class="feature-title">2.1 المرحلة الأولى — تصميم واجهات التطبيق (Figma) — أسبوعان</h3>
+            <p>هذه المرحلة اختيارية، ويمكن الانتقال مباشرة للتنفيذ. لكننا نوصي بها بشدة، وهذه أسبابها:</p>
+            <ul>
+                <li><strong>ترى التطبيق قبل تنفيذه فعلياً:</strong> تحصل على نموذج مرئي كامل لكل شاشة، تتصفحه وتجّربه كأنه تطبيق حقيقي قبل كتابة سطر برمجي واحد.</li>
+                <li><strong>التعديل في هذه المرحلة شبه مجاني:</strong> تغيير شاشة في التصميم يستغرق ساعات، بينما تغييرها بعد البرمجة يستغرق أياماً وقد يمتد لتعديلات في قاعدة البيانات وتأخير في التسليم.</li>
+                <li><strong>تجربة مستخدم أفضل ومبيعات أعلى:</strong> ترتيب الشاشات وعدد الخطوات حتى إتمام الطلب يؤثران مباشرة على نسبة العملاء الذين يكملون الشراء.</li>
+                <li><strong>شكل نهائي احترافي:</strong> هوية بصرية موّحدة في كل الشاشات بدل تصميم يُبنى أثناء البرمجة.</li>
+                <li><strong>وضوح كامل للطرفين:</strong> التصميم المعتمد يصبح المرجع الذي يُنفَّذ عليه، فلا تظهر مفاجآت ولا اختلاف في التوقعات عند التسليم.</li>
+                <li><strong>تسريع مرحلة التنفيذ:</strong> فريق البرمجة يبدأ ومعه شاشات جاهزة ومعتمدة، فلا يتوقف انتظاراً لقرارات تصميمية.</li>
+            </ul>
+
+            <h3 class="feature-title">2.2 المرحلة الثانية — التنفيذ والبرمجة</h3>
+            <p>تشمل برمجة التطبيق ولوحة التحكم والواجهة البرمجية، وربط بوابات الدفع ونظام الفوترة وخدمة الرسائل.<br>
+            مدة هذه المرحلة تُحَّدد بدقة بمجرد اعتماد النطاق النهائي (قائمة الفيتشرز في القسم 3 + إجابات النقاط في القسم 4)، لأن المدة تتغير حسب الفيتشرز المعتمدة نهائياً.</p>
+
+            <h3 class="feature-title">2.3 المرحلة الثالثة — الاختبار والتسليم — أسبوعان</h3>
+            <ul>
+                <li>اختبار شامل لكل الفيتشرز على أجهزة حقيقية.</li>
+                <li>اختبار عمليات الدفع على بيئة التجربة ثم عملية حقيقية على البيئة الفعلية.</li>
+                <li>مراجعة العميل واعتماده، ومعالجة الملاحظات.</li>
+                <li>رفع التطبيق على متجر Apple ومتابعة القبول.</li>
+                <li>تسليم لوحة التحكم مع شرح استخدامها، وتسليم الوصول لكل الحسابات.</li>
+            </ul>
+
+            <h3 class="feature-title">2.4 ملخص المراحل</h3>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>المرحلة</th>
+                            <th>المدة</th>
+                            <th>ملاحظات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>تصميم الواجهات (Figma)</td>
+                            <td>أسبوعان</td>
+                            <td>اختيارية — موصى بها</td>
+                        </tr>
+                        <tr>
+                            <td>التنفيذ والبرمجة</td>
+                            <td>تُحَّدد عند اعتماد النطاق</td>
+                            <td>تبدأ بعد اعتماد التصميم والنطاق</td>
+                        </tr>
+                        <tr>
+                            <td>الاختبار والتسليم والرفع على المتاجر</td>
+                            <td>أسبوعان</td>
+                            <td>تشمل مراجعة المتاجر</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="note-box">
+                <strong>ملاحظة مهمة على التوقيت:</strong> اعتماد حسابات تابي وتمارة والبوابة البنكية، واستخراج اسم المرسل لرسائل التحقق، إجراءات تتم من جهة الجهات الخارجية وقد تستغرق من أسبوع إلى ثلاثة أسابيع. لذلك نوصي ببدئها من الآن وبالتوازي مع التصميم حتى لا تؤخر الإطلاق.
+            </div>
+        </div>
+
+        <!-- القسم الثالث -->
+        <div class="section-card animate-scroll">
+            <h2 class="section-title">3. الفيتشرز المشمولة في النطاق</h2>
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">#</th>
+                            <th style="width: 20%;">الفيتشر</th>
+                            <th>نبذة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>الأدوار والصلاحيات</td><td>ثلاثة أدوار: زائر يتصفح، عميل مسَّجل يشتري، وأدمن يدير المنصة بالكامل من لوحة التحكم، مع سجل يوثّق العمليات الحّساسة.</td></tr>
+                        <tr><td>2</td><td>التسجيل والدخول</td><td>دخول برقم الجوال السعودي وكود تحقق (OTP) — بلا كلمات مرور. نفس الشاشة للتسجيل والدخول، مع تغيير الرقم وحذف الحساب.</td></tr>
+                        <tr><td>3</td><td>إدارة المنتجات</td><td>الأصناف، الأحجام وأسعارها، الوسوم (تاجات) للفلترة، خيارات التجهيز (تقطيع/تغليف/إضافات)، الصور، الوصف المختصر والتفصيلي، وتعليمات الطهي — كلها بالعربية والإنجليزية وتُدار من لوحة التحكم.</td></tr>
+                        <tr><td>4</td><td>المفضلة</td><td>يحفظ العميل المنتجات التي تهمه، مرتبطة بحسابه فتظهر على أي جهاز، مع تقرير للأكثر إضافة للمفضلة.</td></tr>
+                        <tr><td>5</td><td>العروض والخصومات</td><td>خصم بنسبة أو مبلغ على منتج أو مجموعة منتجات أو صنف كامل، بتاريخ بدء وانتهاء تلقائي، ويظهر في قسم عروض داخل التطبيق.</td></tr>
+                        <tr><td>6</td><td>التقييمات</td><td>تقييم بالنجوم بعد استلام الطلب فقط (بدون تعليقات نصية)، مع عرض المتوسط في صفحة المنتج وتقرير للأعلى والأدنى تقييماً.</td></tr>
+                        <tr><td>7</td><td>إدارة المستخدمين</td><td>قائمة العملاء وبياناتهم وعدد طلباتهم وإجمالي إنفاقهم، مع البحث والفلترة والحظر.</td></tr>
+                        <tr><td>8</td><td>لوحة الإحصائيات</td><td>الطلبات والمبيعات ومتوسط قيمة الطلب والعملاء الجدد والمبيعات حسب المنطقة وطريقة الدفع وأكثر المنتجات مبيعاً، مع رسوم بيانية وفلترة زمنية.</td></tr>
+                        <tr><td>9</td><td>الدعم الفني</td><td>قنوات تواصل (هاتف، واتساب، بريد) وأسئلة شائعة يديرها الأدمن، ونظام تذاكر يفتحها العميل ويتابع الرد عليها.</td></tr>
+                        <tr><td>10</td><td>بوابة الدفع</td><td>الدفع بالبطاقات البنكية + تابي + تمارة، مع تأكيد العمليات من جهة المزّود، ودعم الاسترداد الكلي والجزئي من لوحة التحكم.</td></tr>
+                        <tr><td>11</td><td>إدارة الطلبات</td><td>السلة بكل خيارات التجهيز، إنشاء الطلب، متابعة الحالة من »جديد« حتى »تم التسليم«، الإلغاء بسبب، إعادة الطلب.</td></tr>
+                        <tr><td>12</td><td>المناطق وتحديد الموقع</td><td>يحدد العميل منطقته أول فتح للتطبيق (تلقائياً أو من قائمة)، فيرى منتجات منطقته فقط، ويستطيع تغييرها في أي وقت. والأدمن يفعّل ويعّطل المناطق من لوحة التحكم.</td></tr>
+                        <tr><td>13</td><td>بانرات الإعلانات</td><td>بانرات في الصفحة الرئيسية بتمرير تلقائي، مرتبطة بمنتج أو صنف أو عرض، باستهداف مناطق وتواريخ بدء وانتهاء، مع إحصائيات المشاهدات والنقرات.</td></tr>
+                        <tr><td>14</td><td>الإشعارات</td><td>إشعارات تلقائية لكل مراحل الطلب والدفع والاسترداد، وإشعارات تسويقية موّجهة يرسلها الأدمن أو يجدولها، مع مركز إشعارات داخل التطبيق.</td></tr>
+                        <tr><td>15</td><td>الإعدادات</td><td>إعدادات العميل (بياناته، منطقته، عناوينه، اللغة، الإشعارات، حذف الحساب) وإعدادات الأدمن (طرق الدفع، الرسوم، الضريبة، النصوص والسياسات، قنوات التواصل).</td></tr>
+                        <tr><td>16</td><td>الرئيسية والبحث</td><td>صفحة رئيسية تُبنى حسب منطقة العميل، مع بحث فوري وفلاتر بالأصناف والوسوم والسعر والعروض وترتيب النتائج.</td></tr>
+                        <tr><td>17</td><td>الفاتورة الضريبية</td><td>إرسال بيانات الطلب تلقائياً لنظام الفوترة الضريبية عند نجاح الدفع، وعرض الفاتورة للعميل داخل الطلب.</td></tr>
+                        <tr><td>18</td><td>الواجهة البرمجية (API)</td><td>بنية منظمة وموثّقة تسمح مستقبلاً بربط المنصة بأنظمة خارجية (ERP / CRM / موقع ويب) دون إعادة بناء.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="highlight-box">
+                <strong>ما هو خارج النطاق:</strong> أي فيتشر غير مذكور في الجدول أعلاه يُعتبر خارج نطاق هذا الإصدار — ومن ذلك: الدفع عند الاستلام، كوبونات الخصم، المحفظة ونقاط الولاء، وموقع ويب للتسوق. يمكن إضافة أي منها لاحقاً كمرحلة تالية بتقدير مستقل للوقت والتكلفة.
+            </div>
+        </div>
+
+        <!-- القسم الرابع -->
+        <div class="section-card animate-scroll">
+            <h2 class="section-title">4. نقاط تحتاج قراراً من حضرتكم</h2>
+            <p>هذه النقاط تؤثر مباشرة على بنية النظام والتصميم، ونحتاج حسمها قبل بدء التنفيذ لأن تعديلها لاحقاً يعني إعادة عمل ووقتاً إضافياً:</p>
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">#</th>
+                            <th style="width: 25%;">النقطة</th>
+                            <th>السؤال</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>تسعير خيارات التجهيز</td><td>هل خيارات التجهيز (طريقة التقطيع، التغليف، الإضافات) لها رسوم إضافية على سعر المنتج؟ وإن كان هناك خصم على المنتج، هل يشمل هذه الإضافات؟</td></tr>
+                        <tr><td>2</td><td>الكميات والمخزون</td><td>هل توجد كميات محدودة لكل منتج تُخصم مع كل طلب ويظهر المنتج »نفد« عند انتهائها؟ أم الكميات مفتوحة والإدارة توقف المنتج يدوياً عند الحاجة؟</td></tr>
+                        <tr><td>3</td><td>قائمة المناطق</td><td>ما القائمة النهائية للمناطق التي ستُخَدم عند الإطلاق بأسمائها كما ستظهر للعميل؟</td></tr>
+                        <tr><td>4</td><td>رسوم التوصيل والحد الأدنى للطلب</td><td>هل توجد رسوم توصيل؟ وكم قيمتها؟ وهل هناك حد أدنى لقيمة الطلب؟ وهل تُلغى الرسوم فوق مبلغ معيّن؟</td></tr>
+                        <tr><td>5</td><td>التصفح قبل اختيار المنطقة</td><td>هل يُسمح للزائر بتصفح المنتجات قبل تحديد منطقته، أم نُلزمه باختيار المنطقة أولاً؟</td></tr>
+                        <tr><td>6</td><td>الاسترجاع بعد الاستلام</td><td>هل يُتاح للعميل طلب إرجاع المنتج واسترداد المبلغ بعد استلامه؟ ومن داخل التطبيق أم عبر التواصل مع الدعم؟ (نحتاج كذلك نص سياسة الاسترجاع المعتمد لأنه شرط لقبول التكامل لدى تابي وتمارة والمتاجر).</td></tr>
+                        <tr><td>7</td><td>البوابة البنكية</td><td>ما البوابة البنكية أو مزّود خدمات الدفع الذي سيُعتمد للبطاقات؟ وهل نضيف Apple Pay؟ (نوصي بإضافته لأثره المباشر على نسبة إتمام الطلبات في السوق السعودي).</td></tr>
+                        <tr><td>8</td><td>رسوم بوابات الدفع</td><td>هل تُخصم عمولة بوابات الدفع من إيراد المتجر، أم تُضاف على العميل كرسوم خدمة تظهر في الفاتورة؟</td></tr>
+                        <tr><td>9</td><td>الدفع عند الاستلام</td><td>هل مطلوب إتاحته؟ (يحتاج قواعد إضافية: حد أقصى للمبلغ، تأكيد الطلب هاتفياً، وتسوية المبالغ مع المندوبين).</td></tr>
+                        <tr><td>10</td><td>ضريبة القيمة المضافة</td><td>هل الأسعار المعروضة شاملة ضريبة 15%؟ وهل رسوم التوصيل خاضعة للضريبة؟</td></tr>
+                        <tr><td>11</td><td>قناة إرسال كود التحقق</td><td>رسائل نصية (SMS) أم واتساب أم الاثنان؟ (الرسائل النصية أسرع تفعيلاً وأقل تكلفة وتدعم القراءة التلقائية للكود، والواتساب أعلى في الثقة والمظهر وأغلى وأطول في الاعتماد).</td></tr>
+                        <tr><td>12</td><td>التقارير</td><td>ما التقارير التي تحتاجون استخراجها فعلياً من النظام؟ (مثال: المبيعات بالفترة، المبيعات حسب المنطقة، المنتجات الأكثر مبيعاً، العملاء الأكثر شراءً، الطلبات الملغاة وأسبابها، أداء العروض). نحتاج القائمة النهائية لأن كل تقرير يعتمد على تجميع بيانات مختلف.</td></tr>
+                        <tr><td>13</td><td>كوبونات الخصم</td><td>هل مطلوب نظام أكواد خصم يُدخلها العميل في السلة (مختلف عن العروض التي تُطبَّق تلقائياً)؟</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- القسم الخامس -->
+        <div class="section-card animate-scroll">
+            <h2 class="section-title">5. ما نحتاج استلامه من حضرتكم</h2>
+            <p>هذه المتطلبات من مسؤولية العميل ولا يستطيع فريق التطوير توفيرها لأنها مرتبطة بهوية المنشأة وحساباتها. تأّخر أي بند منها يؤخر المرحلة المرتبطة به:</p>
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">المتطلب</th>
+                            <th>التفاصيل</th>
+                            <th style="width: 20%;">يعّطل</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>اسم التطبيق والهوية البصرية</td>
+                            <td>الاسم التجاري النهائي (عربي وإنجليزي) كما سيظهر على المتاجر، ملف الشعار، الألوان الأساسية، والخطوط المعتمدة.</td>
+                            <td>التصميم ورفع التطبيق</td>
+                        </tr>
+                        <tr>
+                            <td>حسابات تابي وتمارة</td>
+                            <td>فتح حساب تاجر لدى كل منهما (يتطلب: سجل تجاري ساري، شهادة ضريبة القيمة المضافة، هوية المالك أو المفّوض، حساب بنكي باسم المنشأة والآيبان، وتوقيع العقد)، ثم تسليمنا مفاتيح الربط لبيئتي التجربة والإنتاج.</td>
+                            <td>تفعيل الدفع بالتقسيط</td>
+                        </tr>
+                        <tr>
+                            <td>البوابة البنكية</td>
+                            <td>اختيار المزّود وفتح حساب التاجر وتسليمنا مفاتيح الربط.</td>
+                            <td>الدفع بالبطاقات</td>
+                        </tr>
+                        <tr>
+                            <td>مزّود الرسائل</td>
+                            <td>فتح حساب لدى مزّود رسائل، استخراج اسم المرسل (Sender ID) — وهي أطول خطوة وتحتاج السجل التجاري — وشحن رصيد الرسائل، وتسليمنا مفاتيح الربط.</td>
+                            <td>التسجيل والدخول بالكامل</td>
+                        </tr>
+                        <tr>
+                            <td>نظام الفوترة الضريبية</td>
+                            <td>وثائق الواجهة البرمجية لنظام الفوترة، بيانات الاعتماد لبيئتي التجربة والإنتاج، وبيانات المنشأة الضريبية (الاسم النظامي، الرقم الضريبي، العنوان).</td>
+                            <td>إصدار الفواتير</td>
+                        </tr>
+                        <tr>
+                            <td>نصوص السياسات</td>
+                            <td>الشروط والأحكام، سياسة الخصوصية، سياسة الاسترجاع والاستبدال، سياسة الشحن والتوصيل.</td>
+                            <td>قبول المتاجر وبوابات الدفع</td>
+                        </tr>
+                        <tr>
+                            <td>حسابات المتاجر</td>
+                            <td>حساب Apple Developer باسم المنشأة (نفتحها معكم إن رغبتم، لكن الملكية والتكلفة على المنشأة).</td>
+                            <td>رفع التطبيق</td>
+                        </tr>
+                        <tr>
+                            <td>الاستضافة والدومين</td>
+                            <td>سيرفر مناسب، اسم نطاق، وشهادة أمان SSL — باسم المنشأة.</td>
+                            <td>النشر والاختبار</td>
+                        </tr>
+                        <tr>
+                            <td>الاعتمادات الكتابية</td>
+                            <td>اعتماد نطاق العمل (هذه الوثيقة) واعتماد تصميم الواجهات قبل بدء البرمجة.</td>
+                            <td>بدء التنفيذ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="note-box" style="border-right-color: var(--primary-color);">
+                <strong>إدارة التغيير:</strong> أي طلب غير وارد في هذه الوثيقة بعد اعتمادها يُعاَمل كطلب تغيير: يُقَّدر بالوقت والتكلفة ويُعتمد كتابياً قبل التنفيذ — وهو ما يحمي الجدول الزمني والميزانية للطرفين.
+            </div>
+
+            <h3 class="feature-title">الخطوة التالية</h3>
+            <ul>
+                <li>مراجعة قائمة الفيتشرز في القسم 3 واعتمادها أو تعديلها.</li>
+                <li>الإجابة على نقاط القسم 4.</li>
+                <li>البدء في تجهيز متطلبات القسم 5، وعلى رأسها حسابات بوابات الدفع واسم المرسل لأنها الأطول زمناً.</li>
+            </ul>
+            <p style="font-weight: bold; color: var(--primary-color); text-align: center; margin-top: 20px;">وبمجرد استلام ذلك، نُصدر الجدول الزمني النهائي لمرحلة التنفيذ ونبدأ العمل.</p>
+        </div>
+
+        
+        <!-- القسم السادس: عرض السعر والتسعير -->
+        <div id="pricing" class="section-card animate-scroll">
+            <h2 class="section-title">6. عرض السعر والتسعير</h2>
+            <p>بناءً على نطاق العمل والمتطلبات الموضحة أعلاه، نقدم لحضرتكم خيارين لتنفيذ المشروع:</p>
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">الخيار</th>
+                            <th>التفاصيل</th>
+                            <th style="width: 15%; text-align: center;">التكلفة</th>
+                        </tr>
+                    </thead>
+                  <tbody>
+    <tr>
+        <td>
+            الخيار الأول<br>
+            <span style="font-size: 0.9rem; color: #2C74B3; font-weight: normal;">
+                (موصى به والأفضل)
+            </span>
+        </td>
+        <td>
+            يتضمن هذا الخيار مرحلة تصميم واجهات وتجربة المستخدم (UI/UX) بالكامل على Figma قبل بدء التنفيذ البرمجي، مع تطبيق الـ Brand Identity والهوية البصرية للعلامة التجارية على جميع عناصر وواجهات التطبيق. 
+            <br><br>
+            يتيح لك ذلك تصور المنتج بشكل كامل قبل كتابة أي كود، ومراجعة تجربة المستخدم وتدفق الشاشات والتفاعلات واعتماد التصميم النهائي مسبقًا، مما يساعد على ضمان اتساق الهوية البصرية، سهولة الاستخدام، وجودة تجربة المستخدم، وتقليل التعديلات والمخاطر أثناء مرحلة البرمجة.
+        </td>
+        <td style="font-size: 1.4rem; font-weight: bold; color: var(--primary-color); text-align: center;">
+            165,000<br>
+            <span style="font-size: 0.9rem; font-weight: normal;">جنيه مصري</span>
+        </td>
+    </tr>
+
+
+<tr>
+    <td>
+        الخيار الثاني
+    </td>
+    <td>
+        الانتقال مباشرة إلى مرحلة التنفيذ والبرمجة بناءً على المتطلبات والمواصفات المتاحة، مع تخطي مرحلة تصميم الواجهات وتجربة المستخدم (UI/UX) على Figma.
+        <br><br>
+        يتيح هذا الخيار بدء التنفيذ بشكل أسرع وتقليل المدة الزمنية اللازمة لبدء المشروع، وهو مناسب في حال كانت الأولوية للسرعة وتجاوز مرحلة التصميم المسبقة. ومع ذلك، لن تتوفر إمكانية معاينة واعتماد تجربة المستخدم والتصميم البصري بشكل كامل قبل بدء البرمجة كما هو الحال في الخيار الأول.
+    </td>
+    <td style="font-size: 1.4rem; font-weight: bold; color: var(--primary-color); text-align: center;">
+        150,000<br>
+        <span style="font-size: 0.9rem; font-weight: normal;">جنيه مصري</span>
+    </td>
+</tr>
+
+
+</tbody>
+
+                </table>
+            </div>
+
+            <div style="margin-top: 40px; border-top: 2px dashed var(--border-color); padding-top: 20px; display: flex; flex-direction: column; align-items: flex-start;">
+                <p style="margin-bottom: 5px; font-size: 1.1rem; color: #555;">صدر هذا العرض وتم اعتماده بواسطة:</p>
+                <h3 style="color: var(--primary-color); margin-bottom: 5px; font-size: 1.5rem; font-weight: 800;">محمد عادل</h3>
+                <p style="font-size: 1rem; color: var(--accent-color); font-weight: 600;">مسؤول التسعير - moemen team</p>
+            </div>
+        </div>
+
+        <button class="print-btn" onclick="printDocument()">طباعة / حفظ كـ PDF</button>
+
+        <!-- فوتر الشركة -->
+        <footer class="footer">
+            <h2>تم الإعداد والتنفيذ بواسطة moemen team</h2>
+            <p>حلول برمجية مبتكرة وموثوقة لنجاح أعمالك</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // أنيميشن عند التمرير (Scroll Animation)
+        document.addEventListener("DOMContentLoaded", function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.animate-scroll').forEach(card => {
+                observer.observe(card);
+            });
+        });
+
+        // وظيفة الطباعة
+        function printDocument() {
+            window.print();
+        }
+    </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-scroll').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Auto Scroll to Pricing
+        if (window.location.hash === '#pricing') {
+            setTimeout(() => {
+                const pricingSection = document.getElementById('pricing');
+
+                if (pricingSection) {
+                    pricingSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }, 300);
+        }
+    });
+
+    function printDocument() {
+        window.print();
+    }
+</script>
+</body>
+</html>

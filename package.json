@@ -1,0 +1,45 @@
+{
+  "name": "moemen-team-system",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "tsx scripts/test-suite.ts && tsx scripts/test-e2e.ts",
+    "test:suite": "tsx scripts/test-suite.ts",
+    "test:e2e": "tsx scripts/test-e2e.ts",
+    "postinstall": "prisma generate && cp -n .env.example .env 2>/dev/null || true"
+  },
+  "dependencies": {
+    "@auth/prisma-adapter": "^1.6.0",
+    "@hello-pangea/dnd": "^16.6.0",
+    "@prisma/client": "^5.12.1",
+    "bcryptjs": "^2.4.3",
+    "date-fns": "^3.6.0",
+    "lucide-react": "^0.368.0",
+    "next": "14.2.0",
+    "next-auth": "^4.24.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "recharts": "^2.12.5",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20.12.5",
+    "@types/react": "^18.2.74",
+    "@types/react-dom": "^18.2.24",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "prisma": "^5.12.1",
+    "tailwindcss": "^3.4.3",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.23.15",
+    "typescript": "^5.4.4"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  }
+}
