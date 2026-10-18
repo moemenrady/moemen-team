@@ -282,6 +282,8 @@ export default function RegisterPage() {
               moemen-team.tech
             </a>
             <span>·</span>
+            <Link href="/about">About Us</Link>
+            <span>·</span>
             <span>Software · Web · Mobile · Automation · Cloud</span>
           </div>
         </div>

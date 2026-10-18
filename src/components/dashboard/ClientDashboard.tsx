@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
+import { Footer } from "@/components/ui/Footer";
 import {
   HomeIcon,
   FolderIcon,
@@ -633,14 +635,14 @@ export function ClientDashboard({
             onClick={() => navigateTo("home")}
           >
             <HomeIcon />
-            <span>Home</span>
+            <span>{t("nav.home", "Home")}</span>
           </button>
           <button
             className={`nav-item ${page === "projects" ? "active" : ""}`}
             onClick={() => navigateTo("projects")}
           >
             <FolderIcon />
-            <span>Projects</span>
+            <span>{t("nav.projects", "Projects")}</span>
           </button>
           <button
             className="nav-item"
@@ -662,6 +664,14 @@ export function ClientDashboard({
             <PlusIcon />
             <span>{t("nav.newProject", "New")}</span>
           </button>
+          <Link
+            href="/about"
+            className="nav-item"
+            onClick={() => setIsDrawerOpen(false)}
+          >
+            <SparkleIcon />
+            <span>{lang === "ar" ? "من نحن (About Us)" : "About Moemen Team"}</span>
+          </Link>
 
           {isAdminOrManager && (
             <a
@@ -683,10 +693,6 @@ export function ClientDashboard({
         </nav>
 
         <div className="sidebar-spacer"></div>
-
-        <div style={{ padding: "0 10px 12px 10px" }}>
-          <LanguageToggle className="w-full justify-center" />
-        </div>
 
         <div className="sidebar-profile">
           <button
@@ -850,33 +856,37 @@ export function ClientDashboard({
               )}
               <div className="home-hero">
                 <h1 className="home-greeting">
-                  Hey {userName.split(" ")[0]}, what are we building today?
+                  {t("home.greeting", { name: userName.split(" ")[0] })}
                 </h1>
-                <p className="home-sub">Ask Moemen AI, or jump straight into your projects below.</p>
+                <p className="home-sub">{t("home.subtitle")}</p>
                 <p className="home-stats-line">
-                  <TrendingUpIcon /> You have <strong>{activeCount} active</strong> and{" "}
-                  <strong>{completedCount} completed</strong> project{completedCount === 1 ? "" : "s"} with us.
+                  <TrendingUpIcon />
+                  <span>
+                    {lang === "ar"
+                      ? `لديك ${activeCount} مشاريع نشطة و ${completedCount} مشاريع مكتملة معنا.`
+                      : `You have ${activeCount} active and ${completedCount} completed project${completedCount === 1 ? "" : "s"} with us.`}
+                  </span>
                 </p>
                 <div className="suggestion-pills">
                   <button
                     className="pill"
-                    onClick={() => handleSendChat("I want to build a new website for my business.")}
+                    onClick={() => handleSendChat(lang === "ar" ? "أريد إنشاء موقع إلكتروني جديد لشركتي." : "I want to build a new website for my business.")}
                   >
-                    <GlobeIcon /> Start a website
+                    <GlobeIcon /> {t("home.startWebsite", "Start a website")}
                   </button>
                   <button
                     className="pill"
-                    onClick={() => handleSendChat("I want to check the progress of my current project.")}
+                    onClick={() => handleSendChat(lang === "ar" ? "أريد معرفة نسبة إنجاز مشروعي الحالي." : "I want to check the progress of my current project.")}
                   >
-                    <FolderIcon /> Check my projects
+                    <FolderIcon /> {t("home.checkProjects", "Check my projects")}
                   </button>
                   <button
                     className="pill"
                     onClick={() =>
-                      handleSendChat("What is the difference between an automation and a custom desktop system?")
+                      handleSendChat(lang === "ar" ? "ما الفرق بين نظام الأتمتة والنظام المخصص لسطح المكتب؟" : "What is the difference between an automation and a custom desktop system?")
                     }
                   >
-                    <SparkleIcon /> Ask Moemen AI
+                    <SparkleIcon /> {t("home.askAi", "Ask Moemen AI")}
                   </button>
                 </div>
               </div>
@@ -910,7 +920,7 @@ export function ClientDashboard({
                   <input
                     type="text"
                     id="chat-input"
-                    placeholder="Message Moemen AI…"
+                    placeholder={t("home.chatPlaceholder", "Message Moemen AI…")}
                     value={chatInput}
                     onChange={(e) => setChatInput(e.target.value)}
                     onKeyDown={(e) => {
@@ -935,9 +945,9 @@ export function ClientDashboard({
               {/* Home Projects Preview */}
               <div className="home-projects-preview">
                 <div className="section-heading">
-                  <h3>Your Projects</h3>
+                  <h3>{t("home.yourProjects", "Your Projects")}</h3>
                   <button className="link-more" onClick={() => navigateTo("projects")}>
-                    See all <ChevronRightIcon />
+                    {t("home.seeAll", "See all")} <ChevronRightIcon />
                   </button>
                 </div>
                 <div className="mini-cards-row">
@@ -1060,7 +1070,7 @@ export function ClientDashboard({
             <div className="project-detail-view">
               <button className="back-link" onClick={() => navigateTo("projects")}>
                 <ArrowLeftIcon />
-                <span>Back to Projects</span>
+                <span>{t("nav.backToProjects", "Back to Projects")}</span>
               </button>
 
               <div className="detail-header">
@@ -1069,20 +1079,20 @@ export function ClientDashboard({
                   <div className="badge-row">
                     <span className="type-chip">
                       {React.createElement(TYPE_META[currentProject.type]?.icon || GlobeIcon)}
-                      {TYPE_META[currentProject.type]?.label || currentProject.type}
+                      {t(`type.${currentProject.type}`, TYPE_META[currentProject.type]?.label || currentProject.type)}
                     </span>
                     <span
                       className={`status-badge ${
                         STATUS_META[currentProject.status]?.cls || "status-requested"
                       }`}
                     >
-                      {STATUS_META[currentProject.status]?.label || currentProject.status}
+                      {t(`status.${currentProject.status}`, STATUS_META[currentProject.status]?.label || currentProject.status)}
                     </span>
                   </div>
                 </div>
                 {currentProject.status === "completed" && (
                   <span className="type-chip delivered-chip">
-                    <CheckCircleIcon /> Delivered
+                    <CheckCircleIcon /> {t("status.delivered", "Delivered")}
                   </span>
                 )}
               </div>
@@ -1094,10 +1104,11 @@ export function ClientDashboard({
                   <div className="icon-circle">
                     <ClockIcon />
                   </div>
-                  <h3>Your request is with our team</h3>
+                  <h3>{lang === "ar" ? "طلبك قيد المراجعة لدى فريقنا الهندسي" : "Your request is with our team"}</h3>
                   <p>
-                    Submitted {fmtDate(currentProject.requestDate)}. We will reach out within 1–2
-                    business days to confirm scope, timeline and pricing.
+                    {lang === "ar"
+                      ? `تم الإرسال بتاريخ ${formatDate(currentProject.requestDate)}. سيتواصل معك فريقنا خلال 24 ساعة لتأكيد النطاق والجدول الزمني.`
+                      : `Submitted ${formatDate(currentProject.requestDate)}. We will reach out within 1–2 business days to confirm scope, timeline and pricing.`}
                   </p>
                 </div>
               ) : (
@@ -1109,30 +1120,30 @@ export function ClientDashboard({
                         <div className="detail-grid">
                           <div className="card">
                             <div className="card-label">
-                              <CalendarIcon /> Contract Date
+                              <CalendarIcon /> {t("project.contractDate", "Contract Date")}
                             </div>
                             <div className="card-value" style={{ fontSize: "1.05rem" }}>
-                              {fmtDate(currentProject.contractDate)}
+                              {formatDate(currentProject.contractDate)}
                             </div>
                             <div className="card-sub">{currentProject.contractStatus || "Active"}</div>
                           </div>
 
                           <div className="card">
                             <div className="card-label">
-                              <ClockIcon /> Timeline
+                              <ClockIcon /> {t("project.timeline", "Timeline")}
                             </div>
                             <div className="card-value" style={{ fontSize: "1.05rem" }}>
-                              {tl.elapsed} / {tl.total} days
+                              {t("project.daysTotal", { elapsed: tl.elapsed, total: tl.total })}
                             </div>
-                            <div className="card-sub">{tl.remaining} days remaining</div>
+                            <div className="card-sub">{t("project.daysRemaining", { days: tl.remaining })}</div>
                           </div>
 
                           <div className="card">
                             <div className="card-label">
-                              <TrendingUpIcon /> Progress
+                              <TrendingUpIcon /> {t("project.progress", "Progress")}
                             </div>
                             <div className="card-value">{currentProject.progress}%</div>
-                            <div className="card-sub">Est. completion {fmtDate(tl.endDateISO)}</div>
+                            <div className="card-sub">{t("project.estCompletion", { date: formatDate(tl.endDateISO) })}</div>
                           </div>
                         </div>
 
@@ -1150,7 +1161,7 @@ export function ClientDashboard({
                   {currentProject.stages && currentProject.stages.length > 0 && (
                     <div className="section">
                       <div className="section-title">
-                        <CheckCircleIcon /> Development Stages
+                        <CheckCircleIcon /> {t("project.stages", "Development Stages")}
                       </div>
                       <div className="stages-row">
                         {currentProject.stages.map((st, i) => (
@@ -1170,7 +1181,7 @@ export function ClientDashboard({
                   <div className="section">
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
                       <div className="section-title" style={{ margin: 0 }}>
-                        <WalletIcon /> Financials
+                        <WalletIcon /> {t("project.financials", "Financials")}
                       </div>
                       <a
                         href={`/projects/${currentProject.id}/statement`}
@@ -1178,25 +1189,25 @@ export function ClientDashboard({
                         rel="noopener noreferrer"
                         className="btn btn-primary btn-sm"
                         style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: "12px", padding: "6px 12px" }}
-                        title="تصدير كشف حساب مالي رسمي بصيغة PDF"
+                        title={t("project.exportPdf", "Export Statement PDF")}
                       >
                         <FileTextIcon />
-                        <span>تصدير كشف حساب PDF</span>
+                        <span>{t("project.exportPdf", "Export Statement PDF")}</span>
                       </a>
                     </div>
                     <div className="finance-stats">
                       <div className="finance-stat">
-                        <div className="label">Total Agreed</div>
-                        <div className="amount">{fmtMoney(currentProject.budget || 0)}</div>
+                        <div className="label">{t("project.totalAgreed", "Total Agreed")}</div>
+                        <div className="amount">{formatMoney(currentProject.budget || 0)}</div>
                       </div>
                       <div className="finance-stat paid">
-                        <div className="label">Paid</div>
-                        <div className="amount">{fmtMoney(currentProject.paid || 0)}</div>
+                        <div className="label">{t("project.paid", "Paid")}</div>
+                        <div className="amount">{formatMoney(currentProject.paid || 0)}</div>
                       </div>
                       <div className="finance-stat remaining">
-                        <div className="label">Remaining</div>
+                        <div className="label">{t("project.remaining", "Remaining")}</div>
                         <div className="amount">
-                          {fmtMoney((currentProject.budget || 0) - (currentProject.paid || 0))}
+                          {formatMoney((currentProject.budget || 0) - (currentProject.paid || 0))}
                         </div>
                       </div>
                     </div>
@@ -1211,10 +1222,10 @@ export function ClientDashboard({
                             <div className="payment-info">
                               <div className="payment-note">{ph.note}</div>
                               <div className="payment-meta">
-                                {fmtDate(ph.date)} · {ph.method}
+                                {formatDate(ph.date)} · {ph.method}
                               </div>
                             </div>
-                            <div className="payment-amount">{fmtMoney(ph.amount)}</div>
+                            <div className="payment-amount">{formatMoney(ph.amount)}</div>
                           </div>
                         ))}
                       </div>
@@ -1225,7 +1236,7 @@ export function ClientDashboard({
                   {currentProject.quotationItems && (
                     <div className="section">
                       <div className="section-title">
-                        <FileTextIcon /> Agreed Quotation
+                        <FileTextIcon /> {t("project.quotation", "Agreed Quotation")}
                       </div>
                       {(() => {
                         let parsedItems: QuotationItem[] = [];
@@ -1239,12 +1250,12 @@ export function ClientDashboard({
                             {parsedItems.map((q, idx) => (
                               <div key={idx} className="quote-row">
                                 <span>{q.item}</span>
-                                <span>{fmtMoney(q.amount)}</span>
+                                <span>{formatMoney(q.amount)}</span>
                               </div>
                             ))}
                             <div className="quote-row total">
-                              <span>Total</span>
-                              <span>{fmtMoney(currentProject.budget || 0)}</span>
+                              <span>{lang === "ar" ? "الإجمالي" : "Total"}</span>
+                              <span>{formatMoney(currentProject.budget || 0)}</span>
                             </div>
                           </div>
                         );
@@ -1643,6 +1654,7 @@ export function ClientDashboard({
             </div>
           )}
         </main>
+        <Footer />
       </div>
 
       {/* ==================== NEW PROJECT MODAL ==================== */}
@@ -1658,7 +1670,7 @@ export function ClientDashboard({
           {newProjectStep === 1 ? (
             <div>
               <div className="modal-header">
-                <h3>What would you like to build?</h3>
+                <h3>{lang === "ar" ? "ما نوع المشروع الذي ترغب في بنائه؟" : "What would you like to build?"}</h3>
                 <button
                   className="icon-btn modal-close"
                   onClick={() => setIsNewProjectOpen(false)}
@@ -1668,8 +1680,9 @@ export function ClientDashboard({
                 </button>
               </div>
               <p className="modal-sub">
-                Pick a category to start your project request. Our team will follow up to scope timeline
-                and pricing.
+                {lang === "ar"
+                  ? "اختر تصنيف المشروع وسيقوم فريقنا الهندسي بدراسة الفكرة وتقديم خطة زمنية وعرض سعر مخصص."
+                  : "Pick a category to start your project request. Our engineering team will follow up to scope timeline and pricing."}
               </p>
               <div className="type-options-grid">
                 {PROJECT_TYPES.map((pt) => {
@@ -1686,8 +1699,8 @@ export function ClientDashboard({
                       <span className="icon-circle">
                         <Icon />
                       </span>
-                      <span className="type-option-label">{pt.label}</span>
-                      <span className="type-option-desc">{pt.desc}</span>
+                      <span className="type-option-label">{t(`type.${pt.key}`, pt.label)}</span>
+                      <span className="type-option-desc">{t(`type.${pt.key}.desc`, pt.desc)}</span>
                     </button>
                   );
                 })}
@@ -1698,7 +1711,7 @@ export function ClientDashboard({
               <div className="modal-header">
                 <h3>
                   {React.createElement(TYPE_META[selectedNewType]?.icon || GlobeIcon)}
-                  {TYPE_META[selectedNewType]?.label}
+                  {t(`type.${selectedNewType}`, TYPE_META[selectedNewType]?.label || selectedNewType)}
                 </h3>
                 <button
                   className="icon-btn modal-close"
@@ -1709,26 +1722,28 @@ export function ClientDashboard({
                 </button>
               </div>
               <p className="modal-sub">
-                Tell us a bit about it, and our team will follow up to scope timeline and pricing.
+                {lang === "ar"
+                  ? "اكتب تفاصيل المشروع والمتطلبات الأساسية ليباشر مهندسونا دراسة المشروع فوراً."
+                  : "Tell us about your requirements, and our team will follow up with complete specs and pricing."}
               </p>
               <form onSubmit={handleCreateProject}>
                 <div className="field">
-                  <label htmlFor="np-name">Project name</label>
+                  <label htmlFor="np-name">{lang === "ar" ? "اسم المشروع *" : "Project name *"}</label>
                   <input
                     id="np-name"
                     required
-                    placeholder={`e.g. ${TYPE_META[selectedNewType]?.label} for my business`}
+                    placeholder={lang === "ar" ? `مثال: متجر أو تطبيق لشركتي` : `e.g. ${TYPE_META[selectedNewType]?.label} for my business`}
                     value={newProjectName}
                     onChange={(e) => setNewProjectName(e.target.value)}
                   />
                 </div>
                 <div className="field">
-                  <label htmlFor="np-desc">وصف وتفاصيل متطلبات المشروع *</label>
+                  <label htmlFor="np-desc">{lang === "ar" ? "وصف وتفاصيل متطلبات المشروع *" : "Project Scope & Description *"}</label>
                   <textarea
                     id="np-desc"
                     rows={3}
                     required
-                    placeholder="ما هي فكرة المشروع؟ ما هي أهم الوظائف التي يجب أن يقوم بها؟ ومن هم المستخدمون؟"
+                    placeholder={lang === "ar" ? "ما هي فكرة المشروع؟ ما هي أهم الوظائف التي يجب أن يقوم بها؟ ومن هم المستخدمون؟" : "What is the core problem? What are the key features and target audience?"}
                     value={newProjectDesc}
                     onChange={(e) => setNewProjectDesc(e.target.value)}
                   ></textarea>
@@ -1736,21 +1751,21 @@ export function ClientDashboard({
 
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
                   <div className="field">
-                    <label htmlFor="np-budget">الميزانية التقديرية (EGP)</label>
+                    <label htmlFor="np-budget">{lang === "ar" ? "الميزانية التقديرية (EGP)" : "Estimated Budget (EGP)"}</label>
                     <input
                       id="np-budget"
                       type="number"
-                      placeholder="مثال: 45000"
+                      placeholder={lang === "ar" ? "مثال: 45000" : "e.g. 45000"}
                       value={newProjectBudget}
                       onChange={(e) => setNewProjectBudget(e.target.value)}
                     />
                   </div>
                   <div className="field">
-                    <label htmlFor="np-days">المدة المطلوبة (أيام)</label>
+                    <label htmlFor="np-days">{lang === "ar" ? "المدة المطلوبة (أيام)" : "Target Days"}</label>
                     <input
                       id="np-days"
                       type="number"
-                      placeholder="مثال: 30"
+                      placeholder="30"
                       value={newProjectDays}
                       onChange={(e) => setNewProjectDays(e.target.value)}
                     />
@@ -1758,11 +1773,11 @@ export function ClientDashboard({
                 </div>
 
                 <div className="field">
-                  <label htmlFor="np-reqs">مميزات أو ملاحظات خاصة (اختياري)</label>
+                  <label htmlFor="np-reqs">{lang === "ar" ? "مميزات أو ملاحظات خاصة (اختياري)" : "Special Requirements / Notes"}</label>
                   <input
                     id="np-reqs"
                     type="text"
-                    placeholder="مثل: بوابات دفع، تكامل واتساب، دعم لغتين..."
+                    placeholder={lang === "ar" ? "مثل: بوابات دفع، تكامل واتساب، دعم لغتين..." : "e.g. Payment gateway, WhatsApp integration, Bilingual..."}
                     value={newProjectRequirements}
                     onChange={(e) => setNewProjectRequirements(e.target.value)}
                   />

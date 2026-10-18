@@ -296,6 +296,8 @@ export default function LoginPage() {
               moemen-team.tech
             </a>
             <span>·</span>
+            <a href="/about">About Us</a>
+            <span>·</span>
             <span>Software · Web · Mobile · Automation · Cloud</span>
           </div>
         </div>

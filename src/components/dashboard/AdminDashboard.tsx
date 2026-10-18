@@ -44,6 +44,7 @@ import {
   Camera,
 } from "lucide-react";
 import { useLanguage, LanguageToggle } from "@/lib/i18n";
+import { Footer } from "@/components/ui/Footer";
 
 // Types
 interface Client {
@@ -966,7 +967,7 @@ export function AdminDashboard() {
   }, [projects]);
 
   return (
-    <div className="min-h-screen bg-[#1F2A24] text-[#F6F7F5] font-cairo" dir="rtl">
+    <div className={`min-h-screen flex flex-col bg-[#1F2A24] text-[#F6F7F5] ${isRTL ? "font-cairo" : ""}`} dir={isRTL ? "rtl" : "ltr"}>
       {/* Toast notifications */}
       <div className="fixed top-5 left-5 z-50 flex flex-col gap-2 max-w-sm pointer-events-none">
         {toasts.map((t) => (
@@ -2459,13 +2460,14 @@ export function AdminDashboard() {
           </div>
         )}
       </main>
+      <Footer />
 
       {/* ======================================================== */}
       {/* MODAL: ADD / EDIT CLIENT */}
       {/* ======================================================== */}
       {isClientModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in">
-          <div className="w-full max-w-lg rounded-2xl bg-[#1F2A24] border border-[#374A3C] shadow-2xl p-6 space-y-5">
+        <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm overflow-y-auto animate-in fade-in">
+          <div className="w-full max-w-lg my-auto max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-2xl bg-[#1F2A24] border border-[#374A3C] shadow-2xl p-5 sm:p-6 space-y-4 sm:space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-[#374A3C]">
               <h3 className="text-lg font-bold text-white flex items-center gap-2">
                 <Users className="text-emerald-400" size={20} />
@@ -2625,8 +2627,8 @@ export function AdminDashboard() {
       {/* MODAL: NEW ACCOUNT CREATED SUCCESS / COPY CREDENTIALS */}
       {/* ======================================================== */}
       {newAccountCreatedInfo && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in">
-          <div className="w-full max-w-md rounded-2xl bg-[#1F2A24] border border-emerald-500/50 shadow-2xl p-6 space-y-5 text-right">
+        <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto animate-in fade-in">
+          <div className="w-full max-w-md my-auto max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-2xl bg-[#1F2A24] border border-emerald-500/50 shadow-2xl p-5 sm:p-6 space-y-4 sm:space-y-5 text-right">
             <div className="w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto">
               <CheckCircle2 size={28} />
             </div>
@@ -2689,8 +2691,8 @@ export function AdminDashboard() {
       {/* MODAL: ADD / EDIT PROJECT */}
       {/* ======================================================== */}
       {isProjectModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in overflow-y-auto">
-          <div className="w-full max-w-2xl rounded-2xl bg-[#1F2A24] border border-[#374A3C] shadow-2xl p-6 space-y-5 my-8">
+        <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm overflow-y-auto animate-in fade-in">
+          <div className="w-full max-w-2xl my-auto max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-2xl bg-[#1F2A24] border border-[#374A3C] shadow-2xl p-5 sm:p-6 space-y-4 sm:space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-[#374A3C]">
               <h3 className="text-lg font-bold text-white flex items-center gap-2">
                 <FolderKanban className="text-emerald-400" size={20} />
@@ -2875,8 +2877,8 @@ export function AdminDashboard() {
       {/* MODAL: PROJECT STAGES CONTROLLER */}
       {/* ======================================================== */}
       {isStagesModalOpen && targetProjectForStages && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in">
-          <div className="w-full max-w-xl rounded-2xl bg-[#1F2A24] border border-[#374A3C] shadow-2xl p-6 space-y-5">
+        <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm overflow-y-auto animate-in fade-in">
+          <div className="w-full max-w-xl my-auto max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-2xl bg-[#1F2A24] border border-[#374A3C] shadow-2xl p-5 sm:p-6 space-y-4 sm:space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-[#374A3C]">
               <div>
                 <h3 className="text-lg font-bold text-white flex items-center gap-2">
@@ -2985,8 +2987,8 @@ export function AdminDashboard() {
       {/* MODAL: ADD PAYMENT */}
       {/* ======================================================== */}
       {isPaymentModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in">
-          <div className="w-full max-w-md rounded-2xl bg-[#1F2A24] border border-[#374A3C] shadow-2xl p-6 space-y-5">
+        <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm overflow-y-auto animate-in fade-in">
+          <div className="w-full max-w-md my-auto max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-2xl bg-[#1F2A24] border border-[#374A3C] shadow-2xl p-5 sm:p-6 space-y-4 sm:space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-[#374A3C]">
               <h3 className="text-lg font-bold text-white flex items-center gap-2">
                 <CreditCard className="text-teal-400" size={20} />
@@ -3095,8 +3097,8 @@ export function AdminDashboard() {
       {/* MODAL: ADD NOTE */}
       {/* ======================================================== */}
       {isNoteModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in">
-          <div className="w-full max-w-md rounded-2xl bg-[#1F2A24] border border-[#374A3C] shadow-2xl p-6 space-y-5">
+        <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm overflow-y-auto animate-in fade-in">
+          <div className="w-full max-w-md my-auto max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-2xl bg-[#1F2A24] border border-[#374A3C] shadow-2xl p-5 sm:p-6 space-y-4 sm:space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-[#374A3C]">
               <h3 className="text-lg font-bold text-white flex items-center gap-2">
                 <MessageSquare className="text-amber-400" size={20} />
@@ -3176,8 +3178,8 @@ export function AdminDashboard() {
       {/* MODAL: VIEW CLIENT PROFILE */}
       {/* ======================================================== */}
       {isClientDetailsOpen && viewingClient && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in overflow-y-auto">
-          <div className="w-full max-w-2xl rounded-2xl bg-[#1F2A24] border border-[#374A3C] shadow-2xl p-6 space-y-5 my-8">
+        <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm overflow-y-auto animate-in fade-in">
+          <div className="w-full max-w-2xl my-auto max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-2xl bg-[#1F2A24] border border-[#374A3C] shadow-2xl p-5 sm:p-6 space-y-4 sm:space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-[#374A3C]">
               <div>
                 <h3 className="text-xl font-bold text-white">{viewingClient.name}</h3>
@@ -3285,8 +3287,8 @@ export function AdminDashboard() {
       {/* MODAL: CONFIRM DELETE */}
       {/* ======================================================== */}
       {deleteConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in">
-          <div className="w-full max-w-sm rounded-2xl bg-[#1F2A24] border border-rose-900/60 shadow-2xl p-6 space-y-4">
+        <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm overflow-y-auto animate-in fade-in">
+          <div className="w-full max-w-sm my-auto max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-2xl bg-[#1F2A24] border border-rose-900/60 shadow-2xl p-5 sm:p-6 space-y-4">
             <div className="flex items-center gap-3 text-rose-400">
               <div className="w-10 h-10 rounded-xl bg-rose-500/20 flex items-center justify-center">
                 <Trash2 size={20} />
@@ -3329,8 +3331,8 @@ export function AdminDashboard() {
       {/* MODAL: PROJECT EXTENSIONS & MERGE MANAGEMENT */}
       {/* ======================================================== */}
       {managingProjectExtensions && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in overflow-y-auto">
-          <div className="w-full max-w-3xl rounded-2xl bg-[#1F2A24] border border-purple-500/40 shadow-2xl p-6 space-y-5 my-8">
+        <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm overflow-y-auto animate-in fade-in">
+          <div className="w-full max-w-3xl my-auto max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-2xl bg-[#1F2A24] border border-purple-500/40 shadow-2xl p-5 sm:p-6 space-y-4 sm:space-y-5">
             {/* Header */}
             <div className="flex items-center justify-between pb-3 border-b border-[#374A3C]">
               <div className="flex items-center gap-3">
@@ -3572,8 +3574,8 @@ export function AdminDashboard() {
       {/* MODAL: ADMIN NOTE / RESOLUTION NOTE */}
       {/* ======================================================== */}
       {adminNoteModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in">
-          <div className="w-full max-w-lg rounded-2xl bg-[#1F2A24] border border-[#374A3C] shadow-2xl p-6 space-y-4">
+        <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm overflow-y-auto animate-in fade-in">
+          <div className="w-full max-w-lg my-auto max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-2xl bg-[#1F2A24] border border-[#374A3C] shadow-2xl p-5 sm:p-6 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-[#374A3C]">
               <h3 className="text-base font-bold text-white flex items-center gap-2">
                 <MessageSquare className="text-amber-400" size={18} />
