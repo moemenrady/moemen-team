@@ -145,13 +145,14 @@ export function Footer() {
                 <span>contact@moemen-team.tech</span>
               </a>
               <a 
-                href="https://wa.me/201021464424" 
+                href="https://wa.me/201094619040" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-semibold transition-colors"
               >
                 <Phone size={14} className="shrink-0" />
-                <span>{lang === "ar" ? "محادثة فورية واتساب" : "Direct WhatsApp Support"}</span>
+                <span dir="ltr">01094619040</span>
+                <span className="text-[11px] text-[#A7B7A7]">({lang === "ar" ? "واتساب / اتصال" : "WhatsApp / Call"})</span>
                 <ArrowUpRight size={13} className="shrink-0" />
               </a>
             </div>

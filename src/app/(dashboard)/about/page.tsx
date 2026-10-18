@@ -25,6 +25,7 @@ import {
   Rocket,
   ChevronRight,
   Flame,
+  Phone,
 } from "lucide-react";
 
 export default function AboutPage() {
@@ -203,13 +204,13 @@ export default function AboutPage() {
             </Link>
 
             <a
-              href="https://wa.me/201021464424"
+              href="https://wa.me/201094619040"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm border border-[#374A3C] bg-[#374A3C]/40 hover:bg-[#374A3C] text-gray-200 hover:text-white transition-all"
             >
               <Headphones size={16} className="text-emerald-400" />
-              <span>{lang === "ar" ? "تحدث مع مهندس متخصص" : "Talk to a Senior Engineer"}</span>
+              <span>{lang === "ar" ? "تحدث مع مهندس متخصص (01094619040)" : "Talk to a Senior Engineer (01094619040)"}</span>
             </a>
           </div>
         </div>
@@ -407,6 +408,15 @@ export default function AboutPage() {
             >
               {lang === "ar" ? "ابدأ من لوحة التحكم" : "Open Dashboard"}
             </Link>
+            <a
+              href="https://wa.me/201094619040"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm border border-emerald-500/50 bg-emerald-950/40 hover:bg-emerald-900/60 text-emerald-300 hover:text-white transition-colors"
+            >
+              <Phone size={15} />
+              <span dir="ltr">01094619040</span>
+            </a>
             <a
               href="mailto:contact@moemen-team.tech"
               className="px-6 py-3 rounded-xl font-semibold text-sm border border-[#374A3C] bg-[#374A3C]/40 hover:bg-[#374A3C] text-white transition-colors"
