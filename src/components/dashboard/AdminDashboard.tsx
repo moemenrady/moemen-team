@@ -1034,7 +1034,12 @@ export function AdminDashboard() {
             </Link>
 
             <button
-              onClick={() => signOut({ callbackUrl: "/login" })}
+              onClick={async () => {
+                try {
+                  await signOut({ redirect: false });
+                } catch {}
+                window.location.href = "/login";
+              }}
               className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium border border-rose-900/50 bg-rose-950/30 hover:bg-rose-900/40 text-rose-300 transition-colors"
             >
               <LogOut size={16} />

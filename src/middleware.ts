@@ -17,11 +17,16 @@ export default withAuth(
   {
     callbacks: {
       authorized: ({ req, token }) => {
-        // Allow auth pages
-        if (req.nextUrl.pathname.startsWith("/login")) {
+        // Allow public pages
+        const path = req.nextUrl.pathname;
+        if (
+          path.startsWith("/login") ||
+          path.startsWith("/register") ||
+          path.startsWith("/about")
+        ) {
           return true;
         }
-        // Require auth for other pages
+        // Require auth for internal dashboard pages
         return !!token;
       },
     },
@@ -29,5 +34,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|login).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|logo.png|login|register|about).*)"],
 };

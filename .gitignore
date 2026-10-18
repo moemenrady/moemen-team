@@ -27,3 +27,10 @@ yarn-error.log*
 .DS_Store
 Thumbs.db
 *.pem
+
+# Database journals and backups
+*.db-journal
+*.db-shm
+*.db-wal
+*.bak
+

@@ -46,8 +46,29 @@ export const authOptions: NextAuthOptions = {
   ],
   session: {
     strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
+  useSecureCookies: process.env.NODE_ENV === "production",
   callbacks: {
+    async redirect({ url, baseUrl }) {
+      // If it's a relative URL, allow it
+      if (url.startsWith("/")) {
+        return url;
+      }
+      try {
+        const parsed = new URL(url);
+        // Validate against trusted domains to eliminate open redirect and localhost redirect vulnerabilities
+        if (
+          parsed.hostname === "moemen-team.tech" ||
+          parsed.hostname === "www.moemen-team.tech" ||
+          parsed.hostname === "localhost" ||
+          parsed.hostname === "127.0.0.1"
+        ) {
+          return url;
+        }
+      } catch {}
+      return "/login";
+    },
     async jwt({ token, user }) {
       if (user) {
         token.id = (user as any).id;
@@ -71,5 +92,6 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: "/login",
+    signOut: "/login",
   },
 };

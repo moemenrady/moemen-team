@@ -732,7 +732,12 @@ export function ClientDashboard({
               <button
                 id="logout-btn"
                 className="btn btn-ghost btn-block btn-sm"
-                onClick={() => signOut({ callbackUrl: "/login" })}
+                onClick={async () => {
+                  try {
+                    await signOut({ redirect: false });
+                  } catch {}
+                  window.location.href = "/login";
+                }}
               >
                 <LogoutIcon />
                 <span>{t("nav.logout", "Log out")}</span>
