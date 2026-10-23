@@ -19,6 +19,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
         documents: true,
         fastFixIssues: { orderBy: { createdAt: "desc" } },
         extensions: { orderBy: { createdAt: "desc" } },
+        delivery: true,
       },
     });
     if (!project) return NextResponse.json({ error: "Not found" }, { status: 404 });
@@ -98,6 +99,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
         notes: { orderBy: { createdAt: "asc" } },
         fastFixIssues: { orderBy: { createdAt: "desc" } },
         extensions: { orderBy: { createdAt: "desc" } },
+        delivery: true,
       },
     });
     return NextResponse.json(project);

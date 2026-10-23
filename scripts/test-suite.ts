@@ -490,6 +490,71 @@ async function runTestSuite() {
     assert(!!translations.ar['fastFix.title'], 'Arabic fastFix.title exists');
     assert(!!translations.en['ext.modalTitle'], 'English ext.modalTitle exists');
     assert(!!translations.ar['ext.mergeBtn'], 'Arabic ext.mergeBtn exists');
+    assert(!!translations.en['delivery.title'], 'English delivery.title exists');
+    assert(!!translations.ar['delivery.title'], 'Arabic delivery.title exists');
+    assert(!!translations.ar['delivery.confirmBtn'], 'Arabic delivery.confirmBtn exists');
+
+    // 13. Project Delivery & Handover Lifecycle Verification
+    console.log('\n1️⃣3️⃣ Project Delivery & Handover Verification:');
+    const deliveryClient = await prisma.client.findFirst();
+    assert(!!deliveryClient, 'Target client found for delivery test project');
+    const deliveryProject = await prisma.project.create({
+      data: {
+        name: 'Delivery Test Platform',
+        description: 'Verifying Project Delivery & Handover feature',
+        type: 'website',
+        status: 'in_review',
+        progress: 95,
+        budget: 45000,
+        paid: 45000,
+        clientId: deliveryClient!.id,
+      },
+    });
+
+    const mockCredentials = [
+      { id: 'cred-1', title: 'Main Admin Dashboard', url: 'https://test.moemen-team.tech/admin', username: 'admin@client.com', password: 'SecurePassword2026!', role: 'Super Admin' },
+    ];
+    const mockAssets = [
+      { id: 'asset-1', title: 'Official User Manual', type: 'pdf', url: '/uploads/delivery/test/manual.pdf', fileSize: '2.4 MB' },
+      { id: 'asset-2', title: 'System Walkthrough Guide', type: 'video', url: 'https://loom.com/share/test', fileSize: 'Video Link' },
+    ];
+
+    const createdDelivery = await prisma.projectDelivery.create({
+      data: {
+        projectId: deliveryProject.id,
+        status: 'ready_for_review',
+        title: 'وثيقة وبيانات تسليم المشروع',
+        summary: 'تم إنجاز وتسليم المشروع بنجاح',
+        instructions: '1. سجل الدخول من الرابط المرفق\n2. استكشف لوحة التحكم',
+        credentials: JSON.stringify(mockCredentials),
+        assets: JSON.stringify(mockAssets),
+        supportPeriod: 'ضمان مجاني لمدة شهرين',
+        deliveredAt: new Date(),
+      },
+    });
+
+    assert(createdDelivery.status === 'ready_for_review', 'Delivery initialized with status "ready_for_review"');
+    assert(JSON.parse(createdDelivery.credentials || '[]').length === 1, 'Delivery credentials stored and parsed correctly');
+    assert(JSON.parse(createdDelivery.assets || '[]').length === 2, 'Delivery assets (PDF, Video) stored and parsed correctly');
+
+    // Client confirmation simulation
+    const confirmedDelivery = await prisma.projectDelivery.update({
+      where: { projectId: deliveryProject.id },
+      data: {
+        status: 'delivered',
+        clientSignedAt: new Date(),
+        clientFeedback: 'المشروع ممتاز وتم الاستلام بنجاح، شكراً مؤمن تيم!',
+      },
+    });
+
+    assert(confirmedDelivery.status === 'delivered', 'Delivery status transitioned to "delivered"');
+    assert(!!confirmedDelivery.clientSignedAt, 'Client sign-off timestamp recorded successfully');
+    assert(confirmedDelivery.clientFeedback?.includes('شكراً'), 'Client feedback saved accurately');
+
+    // Clean up
+    await prisma.projectDelivery.delete({ where: { projectId: deliveryProject.id } });
+    await prisma.project.delete({ where: { id: deliveryProject.id } });
+    assert(true, 'Delivery test project cleaned up cleanly');
 
     console.log('\n====================================================');
     console.log(`📊 TEST RESULTS: ${passed} PASSED | ${failed} FAILED`);

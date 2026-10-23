@@ -2253,3 +2253,246 @@ html[dir="rtl"], body.rtl-mode {
   background: linear-gradient(135deg, rgba(62,124,82,0.04) 0%, rgba(167,183,167,0.08) 100%);
 }
 
+/* ===================================================================
+   PROJECT DELIVERY & HANDOVER STYLES (فيتشر التسليم والتوثيق)
+=================================================================== */
+.delivery-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-med);
+}
+
+.delivery-hero {
+  background: linear-gradient(135deg, rgba(62,124,82,0.1) 0%, rgba(31,42,36,0.05) 100%);
+  border: 1px solid rgba(62,124,82,0.25);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.delivery-hero.status-delivered {
+  background: linear-gradient(135deg, rgba(34,197,94,0.12) 0%, rgba(62,124,82,0.08) 100%);
+  border-color: rgba(34,197,94,0.35);
+}
+
+.delivery-hero.status-ready_for_review {
+  background: linear-gradient(135deg, rgba(234,179,8,0.12) 0%, rgba(202,138,4,0.06) 100%);
+  border-color: rgba(234,179,8,0.35);
+}
+
+.delivery-hero.status-revision_requested {
+  background: linear-gradient(135deg, rgba(59,130,246,0.12) 0%, rgba(37,99,235,0.06) 100%);
+  border-color: rgba(59,130,246,0.35);
+}
+
+.delivery-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.delivery-status-chip.delivered {
+  background: rgba(34,197,94,0.15);
+  color: #16a34a;
+  border: 1px solid rgba(34,197,94,0.35);
+}
+
+.delivery-status-chip.ready_for_review {
+  background: rgba(234,179,8,0.18);
+  color: #b45309;
+  border: 1px solid rgba(234,179,8,0.4);
+}
+
+.delivery-status-chip.revision_requested {
+  background: rgba(59,130,246,0.15);
+  color: #2563eb;
+  border: 1px solid rgba(59,130,246,0.35);
+}
+
+.delivery-status-chip.preparing {
+  background: rgba(107,114,128,0.15);
+  color: #4b5563;
+  border: 1px solid rgba(107,114,128,0.3);
+}
+
+/* Credentials Grid & Cards */
+.credentials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.credential-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  position: relative;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.credential-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(31,42,36,0.08);
+  border-color: rgba(62,124,82,0.4);
+}
+
+.credential-input-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-app);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  padding: 6px 10px;
+  font-family: monospace, sans-serif;
+  font-size: 13px;
+  color: var(--text-1);
+  margin-top: 6px;
+  word-break: break-all;
+}
+
+.credential-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  background: transparent;
+  color: var(--text-2);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+  gap: 4px;
+}
+
+.credential-copy-btn:hover {
+  background: var(--border-soft);
+  color: var(--moemen-green);
+}
+
+.credential-copy-btn.copied {
+  background: rgba(34,197,94,0.15);
+  color: #16a34a;
+  border-color: rgba(34,197,94,0.3);
+}
+
+/* Delivery Assets Grid */
+.delivery-assets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.delivery-asset-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.delivery-asset-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(31,42,36,0.08);
+}
+
+.asset-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.asset-badge.pdf {
+  background: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.asset-badge.excel {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.asset-badge.image {
+  background: rgba(168, 85, 247, 0.12);
+  color: #9333ea;
+  border: 1px solid rgba(168, 85, 247, 0.25);
+}
+
+.asset-badge.video {
+  background: rgba(245, 158, 11, 0.12);
+  color: #d97706;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.asset-badge.archive {
+  background: rgba(59, 130, 246, 0.12);
+  color: #2563eb;
+  border: 1px solid rgba(59, 130, 246, 0.25);
+}
+
+.asset-badge.link {
+  background: rgba(107, 114, 128, 0.12);
+  color: #4b5563;
+  border: 1px solid rgba(107, 114, 128, 0.25);
+}
+
+/* Official Handover Certificate / Seal */
+.delivery-seal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(34,197,94,0.15) 0%, rgba(62,124,82,0.2) 100%);
+  border: 1.5px solid #22c55e;
+  border-radius: 12px;
+  padding: 8px 16px;
+  color: #15803d;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 2px 10px rgba(34,197,94,0.2);
+}
+
+@media print {
+  .topbar, .sidebar, .back-link, .modal-backdrop, .btn, .notes-input-row, footer {
+    display: none !important;
+  }
+  .app-layout {
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .delivery-container {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+}
+
+

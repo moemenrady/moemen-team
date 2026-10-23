@@ -37,6 +37,8 @@ import {
   GitMergeIcon,
 } from "@/components/ui/Icons";
 import { useLanguage, LanguageToggle } from "@/lib/i18n";
+import { ProjectDeliveryView } from "@/components/dashboard/ProjectDeliveryView";
+import { AdminDeliveryModal } from "@/components/dashboard/AdminDeliveryModal";
 
 interface Stage {
   id?: string;
@@ -124,6 +126,7 @@ interface ProjectData {
   notes?: NoteItem[];
   fastFixIssues?: FastFixIssueItem[];
   extensions?: ProjectExtensionItem[];
+  delivery?: any;
 }
 
 interface ChatMessage {
@@ -252,6 +255,7 @@ export function ClientDashboard({
   const [extVersionTarget, setExtVersionTarget] = useState("v2.0");
   const [isSubmittingExt, setIsSubmittingExt] = useState(false);
   const [isMergingExtId, setIsMergingExtId] = useState<string | null>(null);
+  const [isAdminDeliveryModalOpen, setIsAdminDeliveryModalOpen] = useState(false);
 
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [previewProjectId, setPreviewProjectId] = useState<string | null>(null);
@@ -1095,10 +1099,31 @@ export function ClientDashboard({
                     </span>
                   </div>
                 </div>
-                {currentProject.status === "completed" && (
-                  <span className="type-chip delivered-chip">
+                {(currentProject.status === "completed" || currentProject.delivery?.status === "delivered") && (
+                  <a
+                    href="#project-delivery-section"
+                    className="type-chip delivered-chip"
+                    style={{ textDecoration: "none" }}
+                    title={lang === "ar" ? "الانتقال إلى وثيقة وبيانات التسليم" : "Jump to Handover section"}
+                  >
                     <CheckCircleIcon /> {t("status.delivered", "Delivered")}
-                  </span>
+                  </a>
+                )}
+                {currentProject.delivery?.status === "ready_for_review" && (
+                  <a
+                    href="#project-delivery-section"
+                    className="type-chip"
+                    style={{
+                      background: "rgba(234, 179, 8, 0.18)",
+                      color: "#b45309",
+                      border: "1px solid rgba(234, 179, 8, 0.4)",
+                      fontWeight: 700,
+                      textDecoration: "none",
+                    }}
+                    title={lang === "ar" ? "المشروع جاهز للاستلام والمراجعة" : "Deliverables are ready for your review"}
+                  >
+                    <SparkleIcon /> {t("delivery.status.ready_for_review", "Ready for Client Review")}
+                  </a>
                 )}
               </div>
 
@@ -1429,6 +1454,15 @@ export function ClientDashboard({
                       </div>
                     )}
                   </div>
+
+                  {/* Project Delivery & Handover Section (فيتشر التسليم والتوثيق) */}
+                  <ProjectDeliveryView
+                    project={currentProject}
+                    delivery={currentProject.delivery}
+                    onRefresh={fetchProjects}
+                    isAdmin={isAdminOrManager}
+                    onOpenAdminManage={() => setIsAdminDeliveryModalOpen(true)}
+                  />
 
                   {/* Project Evolution & Development Requests Section */}
                   <div className="section" id="project-evolution-section">
@@ -2238,6 +2272,21 @@ export function ClientDashboard({
             />
           </div>
         </div>
+      )}
+
+      {/* ==================== ADMIN DELIVERY MODAL ==================== */}
+      {isAdminOrManager && isAdminDeliveryModalOpen && currentProject && (
+        <AdminDeliveryModal
+          isOpen={isAdminDeliveryModalOpen}
+          onClose={() => setIsAdminDeliveryModalOpen(false)}
+          project={currentProject}
+          deliveryData={currentProject.delivery}
+          onSaved={async () => {
+            await fetchProjects();
+            setIsAdminDeliveryModalOpen(false);
+          }}
+          lang={lang}
+        />
       )}
 
       {/* ==================== TOAST CONTAINER ==================== */}

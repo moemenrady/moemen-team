@@ -45,6 +45,7 @@ import {
 } from "lucide-react";
 import { useLanguage, LanguageToggle } from "@/lib/i18n";
 import { Footer } from "@/components/ui/Footer";
+import { AdminDeliveryModal } from "./AdminDeliveryModal";
 
 // Types
 interface Client {
@@ -139,6 +140,7 @@ interface Project {
   notes?: Note[];
   fastFixIssues?: any[];
   extensions?: any[];
+  delivery?: any | null;
   createdAt: string;
 }
 
@@ -206,6 +208,10 @@ export function AdminDashboard() {
   const [loadingExtensions, setLoadingExtensions] = useState(false);
   const [isMergingExtId, setIsMergingExtId] = useState<string | null>(null);
   const [editingExtensionProgress, setEditingExtensionProgress] = useState<{ id: string; progress: number } | null>(null);
+
+  // Project Delivery State in Admin
+  const [managingDeliveryProject, setManagingDeliveryProject] = useState<Project | null>(null);
+  const [deliveryDataForModal, setDeliveryDataForModal] = useState<any | null>(null);
 
   // Main data states
   const [summary, setSummary] = useState<AdminSummary | null>(null);
@@ -459,6 +465,21 @@ export function AdminDashboard() {
       showToast("خطأ أثناء دمج مرحلة التطوير", "error");
     } finally {
       setIsMergingExtId(null);
+    }
+  };
+
+  const openProjectDeliveryModal = async (proj: Project) => {
+    setManagingDeliveryProject(proj);
+    try {
+      const res = await fetch(`/api/projects/${proj.id}/delivery`);
+      if (res.ok) {
+        const data = await res.json();
+        setDeliveryDataForModal(data);
+      } else {
+        setDeliveryDataForModal(proj.delivery || null);
+      }
+    } catch {
+      setDeliveryDataForModal(proj.delivery || null);
     }
   };
 
@@ -1801,7 +1822,28 @@ export function AdminDashboard() {
                       </div>
 
                       {/* Top Action Buttons */}
-                      <div className="flex items-center gap-2 self-end md:self-auto">
+                      <div className="flex items-center gap-2 self-end md:self-auto flex-wrap">
+                        <button
+                          onClick={() => openProjectDeliveryModal(project)}
+                          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors border ${
+                            project.delivery?.status === "delivered"
+                              ? "bg-emerald-600/25 hover:bg-emerald-600/35 text-emerald-300 border-emerald-500/50"
+                              : project.delivery?.status === "ready_for_review"
+                              ? "bg-amber-600/25 hover:bg-amber-600/35 text-amber-300 border-amber-500/50"
+                              : project.delivery?.status === "revision_requested"
+                              ? "bg-blue-600/25 hover:bg-blue-600/35 text-blue-300 border-blue-500/50"
+                              : "bg-emerald-700/20 hover:bg-emerald-700/30 text-emerald-300 border-emerald-600/30"
+                          }`}
+                          title="إدارة بيانات التسليم والتوثيق وحسابات الدخول ومستندات المشروع"
+                        >
+                          <ShieldCheck size={14} />
+                          <span>
+                            {lang === "ar" ? "التسليم والتوثيق" : "Delivery"}
+                            {project.delivery?.status === "delivered" && " (معتمد ✓)"}
+                            {project.delivery?.status === "ready_for_review" && " (جاهز)"}
+                            {project.delivery?.status === "revision_requested" && " (ملاحظات)"}
+                          </span>
+                        </button>
                         <button
                           onClick={() => openProjectExtensions(project)}
                           className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/30 transition-colors"
@@ -3623,6 +3665,21 @@ export function AdminDashboard() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* MODAL: PROJECT DELIVERY & HANDOVER MANAGEMENT */}
+      {managingDeliveryProject && (
+        <AdminDeliveryModal
+          isOpen={!!managingDeliveryProject}
+          onClose={() => setManagingDeliveryProject(null)}
+          project={managingDeliveryProject}
+          deliveryData={deliveryDataForModal}
+          onSaved={async () => {
+            await loadAllData(false);
+            setManagingDeliveryProject(null);
+          }}
+          lang={lang as any}
+        />
       )}
     </div>
   );

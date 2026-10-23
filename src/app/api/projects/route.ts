@@ -42,6 +42,7 @@ export async function GET(req: Request) {
         notes: { orderBy: { createdAt: "asc" } },
         fastFixIssues: { orderBy: { createdAt: "desc" } },
         extensions: { orderBy: { createdAt: "desc" } },
+        delivery: true,
       },
       orderBy: { createdAt: "desc" },
     });
@@ -155,6 +156,7 @@ export async function POST(req: Request) {
         notes: { orderBy: { createdAt: "asc" } },
         fastFixIssues: { orderBy: { createdAt: "desc" } },
         extensions: { orderBy: { createdAt: "desc" } },
+        delivery: true,
       }
     });
 
